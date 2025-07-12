@@ -6,4 +6,6 @@ Valitsin aiheeksi RSA-salauksen, koska halusin ymmärtää tietoturvallisuuteen 
 
 Varsinaista ohjelmaa en ole aloittanut vielä työstämään. Opin aiheeseen liittyviä algoritmeja yleisellä tasolla, mutta haluan vielä perehtyä näihin lisää. Haasteeksi osoittautui oman työn suunnittelu, sillä työ on laaja ja on vaikea hahmottaa mihin tarkalleen alussa suuntaisi huomion, vaikka kurssin ohjeistus onkin varsin kattava. Tämä on ollut toisaalta ollut varsin hyvää harjoitusta isompien projektien aloittamisessa.
 
-Tällä viikolla käytin projektiin aikaa noin 10 tuntia.
+Tutkittuani algoritmien logiikkaa lisää seuraava askeleeni on aloittaa niiden varsinainen ohjelmointi.
+
+Tällä viikolla käytin projektiin aikaa 10 tuntia.
