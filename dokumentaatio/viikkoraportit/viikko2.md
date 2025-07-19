@@ -1,4 +1,4 @@
-Tällä viikolla perehdyin lisää vaadittavien algoritmien toimintaan opiskelemalla erityisesti RSA-salauksen matemaattista kaavaa ja Sieve of Eratosthenes. Lisäksi olen perehtynyt kurssimateriaalin vaatimuksiin yksikkötesteistä ja riippuvuuksien hallinnasta.
+Tällä viikolla perehdyin lisää vaadittavien algoritmien toimintaan opiskelemalla erityisesti RSA-salauksen matemaattista kaavaa ja Sieve of Eratosthenes:in toimintaperiaatetta. Lisäksi olen perehtynyt kurssimateriaalin vaatimuksiin yksikkötesteistä ja riippuvuuksien hallinnasta.
 
 Sain ohjelmoitua Sieve of Eratosthenes -algoritmin ja se näyttäisi antavan oikeita tuloksia komentoriviltä ajettuna. Vertasin algoritmin toimintaa yksinkertaisella print-komennolla internetistä löytyviin alkulukulistoihin ja ne ovat yhteneväiset. Loin tätä varten myös testikansioon tiedoston, johon loin yksinkertaisen testin.
 
