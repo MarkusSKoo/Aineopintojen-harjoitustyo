@@ -6,6 +6,6 @@ Tämän viikon tärkein oppi keskittyi Sieve of Eratosthenes:in toiminnan ymmär
 
 Riippuvuuksien hallinnassa tuli ongelma vastaan, enkä ehtinyt korjata tätä siten, että olisin voinut ajaa yksikkötestin läpi. Työtilanne on loppukuun ajan varsin tiukka, mutta ensi kuussa ehdin kompensoida sitä, mikä tässä kuussa jää tietoisesti vähemmälle huomiolle.
 
-Seuraavaksi keskityn riippuvuuksien hallinnassa ilmenneiden ongelmien korjaamiseen. Kun tämä on valmis, jatkan testien kirjoiottamista ja ohjelmoin Miller-Rabin-algoritmin.
+Seuraavaksi keskityn riippuvuuksien hallinnassa ilmenneiden ongelmien korjaamiseen. Kun tämä on valmis, jatkan testien kirjoittamista ja ohjelmoin Miller-Rabin-algoritmin.
 
 Käytin tämän viikon aikana projektiin 7 tuntia.
