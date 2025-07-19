@@ -6,13 +6,17 @@ def sieve_of_eratosthenes(n):
 
     Returns:
         list[int]: Löydetyt alkuluvut listaformaatissa"""
+    
+    if n <= 1:
+        return "Input must be greater than 1"
 
     numbers_to_n = [True] * (n + 1)
     primes = []
     p = 2
 
     numbers_to_n[0] = False
-    numbers_to_n[1] = False
+    if n >= 1:
+        numbers_to_n[1] = False
 
     for p in range(2, n + 1):
         if numbers_to_n[p] == True:
