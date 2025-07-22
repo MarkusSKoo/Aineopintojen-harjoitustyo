@@ -1,3 +1,5 @@
+import random
+
 def sieve_of_eratosthenes(n):
     """Käy läpi ja seuloo Erathosteneen seulalla kaikki alkuluvut väliltä 0-n.
 
@@ -15,8 +17,7 @@ def sieve_of_eratosthenes(n):
     p = 2
 
     numbers_to_n[0] = False
-    if n >= 1:
-        numbers_to_n[1] = False
+    numbers_to_n[1] = False
 
     for p in range(2, n + 1):
         if numbers_to_n[p] == True:
@@ -28,3 +29,48 @@ def sieve_of_eratosthenes(n):
             primes.append(i)
 
     return primes
+
+def miller_rabin(n, k):
+    """Testaa onko luku 2 tai sitä suurempi pariton luku todennäköisesti alkuluku.
+    
+    Args:
+        n (int): Testattava pariton luku, kun n > 2.
+        k (int): Haluttu testikierrosten määrä.
+        
+    returns:
+        True, jos luku on todennäköisesti alkuluku.
+        False, jos luku ei varmasti ole alkuluku"""
+    
+    if k <= 0:
+        return "k must be greater than 0"
+    if n in [2, 3, 5, 7]:
+        return True
+    if n < 2:
+        return "n must be greater than 2"
+    if n % 2 == 0:
+        return "n must be an odd number"
+    
+    d = n - 1
+    s = 0
+
+    while d % 2 == 0:
+        d = d // 2
+        s += 1
+
+    for _ in range(k):
+        a = random.randint(2, n - 2)
+        x = (a ** d) % n
+        if x == 1 or x == n-1:
+            continue
+
+        elif x != 1 and x != n-1:
+            for _ in range(s):
+                y = (x ** 2) % n
+                if y == 1 and x != 1 and x != n - 1:
+                    return False
+                
+                x = y
+            if y != 1:
+                return False
+        
+    return True
