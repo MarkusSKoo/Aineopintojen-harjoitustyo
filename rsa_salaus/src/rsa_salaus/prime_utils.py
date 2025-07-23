@@ -1,6 +1,6 @@
 import random
 
-def sieve_of_eratosthenes(n):
+def sieve_of_eratosthenes(n: int):
     """Käy läpi ja seuloo Erathosteneen seulalla kaikki alkuluvut väliltä 0-n.
 
     Args:
@@ -30,23 +30,23 @@ def sieve_of_eratosthenes(n):
 
     return primes
 
-def miller_rabin(n, k):
+def miller_rabin(n: int, k: int):
     """Testaa onko luku 2 tai sitä suurempi pariton luku todennäköisesti alkuluku.
     
     Args:
         n (int): Testattava pariton luku, kun n > 2.
         k (int): Haluttu testikierrosten määrä.
         
-    returns:
+    Returns:
         True, jos luku on todennäköisesti alkuluku.
         False, jos luku ei varmasti ole alkuluku"""
     
     if k <= 0:
         return "k must be greater than 0"
-    if n in [2, 3, 5, 7]:
-        return True
     if n < 2:
         return "n must be greater than 2"
+    if n in [2, 3, 5, 7]:
+        return True
     if n % 2 == 0:
         return False
     
@@ -74,3 +74,26 @@ def miller_rabin(n, k):
                 return False
         
     return True
+
+def euclidean(a: int, b: int):
+    """Etsii suurimman yhteisen tekijän luvuille a ja b.
+
+    Args:
+        a (int): Testattava kokonaisluku.
+        b (int): Testattava kokonaisluku.
+        
+    Returns:
+        int: Palauttaa kokonaisluvun, joka on suurin yhteinen tekijä."""
+    
+    if a == b == 0:
+        raise ValueError("Both values cannot be 0")
+    if a == 0:
+        return abs(b)
+    if b == 0:
+        return abs(a)
+    
+    while b != 0:
+        t = b
+        b = a % b
+        a = t
+    return a
