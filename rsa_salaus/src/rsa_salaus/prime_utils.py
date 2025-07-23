@@ -48,7 +48,7 @@ def miller_rabin(n, k):
     if n < 2:
         return "n must be greater than 2"
     if n % 2 == 0:
-        return "n must be an odd number"
+        return False
     
     d = n - 1
     s = 0
@@ -59,13 +59,13 @@ def miller_rabin(n, k):
 
     for _ in range(k):
         a = random.randint(2, n - 2)
-        x = (a ** d) % n
+        x = pow(a, d, n)
         if x == 1 or x == n-1:
             continue
 
         elif x != 1 and x != n-1:
             for _ in range(s):
-                y = (x ** 2) % n
+                y = pow(x, 2, n)
                 if y == 1 and x != 1 and x != n - 1:
                     return False
                 
