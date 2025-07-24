@@ -1,5 +1,5 @@
 import pytest
-from src.rsa_salaus.prime_utils import sieve_of_eratosthenes, miller_rabin, euclidean
+from src.rsa_salaus.prime_utils import sieve_of_eratosthenes, miller_rabin, euclidean, extended_euclidean
 import random
 
 def test_sieve_small():
@@ -25,6 +25,9 @@ def test_sieve_large():
 
 def test_miller_rabin_small_n():
     assert miller_rabin(1, 1) == "n must be greater than 2"
+
+def test_miller_rabin_2():
+    assert miller_rabin(2, 1) == True
 
 def test_miller_rabin_even_n():
     assert miller_rabin(982, 1) == False
@@ -124,3 +127,37 @@ def test_euclidean_both_negative():
 def test_euclidean_a_negative_b_positive():
     assert euclidean(-48, 18) == 6
 
+def test_extended_euclidean_common_divisor():
+    x, y = extended_euclidean(30, 12)
+    gcd = euclidean(30, 12)
+    assert 30 * x + 12 * y == gcd
+
+def test_extended_euclidean_coprime():
+    x, y = extended_euclidean(11, 17)
+    gcd = euclidean(11, 17)
+    assert 11 * x + 17 * y == gcd
+
+def test_extended_euclidean_same():
+    x, y = extended_euclidean(11, 11)
+    gcd = euclidean(11, 11)
+    assert 11 * x + 11 * y == gcd
+
+def test_extended_euclidean_a_zero():
+    x, y = extended_euclidean(0, 23)
+    gcd = euclidean(0, 23)
+    assert 0 * x + 23 * y == gcd
+
+def test_extended_euclidean_b_zero():
+    x, y = extended_euclidean(23, 0)
+    gcd = euclidean(23, 0)
+    assert 23 * x + 0 * y == gcd
+
+def test_extended_euclidean_large():
+    x, y = extended_euclidean(5776, 8334)
+    gcd = euclidean(5776, 8334)
+    assert 5776 * x + 8334 * y == gcd
+
+def test_extended_euclidean_neg():
+    x, y = extended_euclidean(-23, 19)
+    gcd = euclidean(-23, 19)
+    assert -23 * x + 19 * y == gcd

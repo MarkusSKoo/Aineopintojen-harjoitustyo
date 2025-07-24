@@ -97,3 +97,25 @@ def euclidean(a: int, b: int):
         b = a % b
         a = t
     return a
+
+def extended_euclidean(a: int, b:int):
+    """
+    """
+
+    s = 0
+    old_s = 1
+    r = b
+    old_r = a
+
+    while r != 0:
+        quotient = old_r // r
+        old_r, r = r, old_r - quotient * r
+        old_s, s = s, old_s - quotient * s
+
+    if b != 0:
+        bezout_t = (old_r - old_s * a) // b
+    
+    else:
+        bezout_t = 0
+
+    return (old_s, bezout_t)
