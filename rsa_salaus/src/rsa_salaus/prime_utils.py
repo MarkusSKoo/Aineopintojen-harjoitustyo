@@ -63,7 +63,7 @@ def miller_rabin(n: int, k: int):
         if x == 1 or x == n-1:
             continue
 
-        elif x != 1 and x != n-1:
+        else:
             for _ in range(s):
                 y = pow(x, 2, n)
                 if y == 1 and x != 1 and x != n - 1:
