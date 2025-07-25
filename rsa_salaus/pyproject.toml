@@ -16,6 +16,7 @@ packages = [{include = "rsa_salaus", from = "src"}]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.4.1"
+coverage = "^7.10.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

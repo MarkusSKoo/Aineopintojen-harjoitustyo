@@ -103,14 +103,22 @@ def test_euclidean_large_common_divisor():
 def test_euclidean_large_coprime():
     big_primes = sieve_of_eratosthenes(100000)
 
-    for _ in range(20):
-        a = random.choice(big_primes)
-        b = random.choice(big_primes)
+    for i in range(100):
+
+        if i == 10:
+            a = big_primes[10]
+            b = big_primes[10]
+
+        else:
+            a = random.choice(big_primes)
+            b = random.choice(big_primes)
 
         if a == b:
             assert euclidean(a, b) == a
         else:
             assert euclidean(a, b) == 1
+
+    
 
 def test_euclidean_samevalue():
     assert euclidean(2746, 2746) == 2746
