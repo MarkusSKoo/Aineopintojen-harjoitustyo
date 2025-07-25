@@ -6,13 +6,16 @@ def test_sieve_small():
     assert sieve_of_eratosthenes(10) == [2, 3, 5, 7]
 
 def test_sieve_negative():
-    assert sieve_of_eratosthenes(-5) == "Input must be greater than 1"
+    with pytest.raises(ValueError, match="Input must be greater than 1"):
+        sieve_of_eratosthenes(-5)
 
-def test_sieve_empty():
-    assert sieve_of_eratosthenes(0) == "Input must be greater than 1"
+def test_sieve_zero():
+    with pytest.raises(ValueError, match="Input must be greater than 1"):
+        sieve_of_eratosthenes(0)
 
 def test_sieve_one():
-    assert sieve_of_eratosthenes(1) == "Input must be greater than 1"
+    with pytest.raises(ValueError, match="Input must be greater than 1"):
+        sieve_of_eratosthenes(1)
 
 def test_sieve_two():
     assert sieve_of_eratosthenes(2) == [2]
@@ -24,7 +27,8 @@ def test_sieve_large():
     assert sieve_of_eratosthenes(200) == [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199]
 
 def test_miller_rabin_small_n():
-    assert miller_rabin(1, 1) == "n must be greater than 2"
+    with pytest.raises(ValueError, match="n must be greater than 1"):
+        miller_rabin(1, 1)
 
 def test_miller_rabin_2():
     assert miller_rabin(2, 1) == True
@@ -33,10 +37,11 @@ def test_miller_rabin_even_n():
     assert miller_rabin(982, 1) == False
 
 def test_miller_rabin_small_k():
-    assert miller_rabin(3, 0) == "k must be greater than 0"
+    with pytest.raises(ValueError, match="k must be greater than 0"):
+        miller_rabin(3, 0)
 
-def test_miller_rabin_200():
-    numbers = sieve_of_eratosthenes(200)
+def test_miller_rabin_5000():
+    numbers = sieve_of_eratosthenes(5000)
     for number in numbers:
         assert miller_rabin(number, 40) == True
 
@@ -68,13 +73,13 @@ def test_miller_rabin_big_not_primes():
     611839, 611873, 611879, 611887, 611903, 611921, 611927, 611939, 611951, 611953
 ]
     
-    numbers = []
+    non_primes = []
     for i in range(611693, 611953):
         if i % 2 != 0:
             if i not in primes:
-                numbers.append(i)
+                non_primes.append(i)
 
-    for number in numbers:
+    for number in non_primes:
         assert miller_rabin(number, 40) == False
 
 def test_miller_rabin_2048_primes():
@@ -111,9 +116,8 @@ def test_euclidean_samevalue():
     assert euclidean(2746, 2746) == 2746
 
 def test_euclidean_both_zero():
-    try:
-        assert euclidean(0, 0) == "Both values cannot be 0"
-    except: ValueError("Both values cannot be 0")
+    with pytest.raises(ValueError, match="Both values cannot be 0"):
+        euclidean(0, 0)
 
 def test_euclidean_a_zero_b_negative():
     assert euclidean(0, -173) == 173
@@ -161,3 +165,7 @@ def test_extended_euclidean_neg():
     x, y = extended_euclidean(-23, 19)
     gcd = euclidean(-23, 19)
     assert -23 * x + 19 * y == gcd
+
+def test_extended_euclidean_both_zero():
+    with pytest.raises(ValueError, match="Both values cannot be 0"):
+        extended_euclidean(0, 0)

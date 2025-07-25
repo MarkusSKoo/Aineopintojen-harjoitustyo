@@ -10,7 +10,7 @@ def sieve_of_eratosthenes(n: int):
         list[int]: Löydetyt alkuluvut listaformaatissa"""
     
     if n <= 1:
-        return "Input must be greater than 1"
+        raise ValueError("Input must be greater than 1")
 
     numbers_to_n = [True] * (n + 1)
     primes = []
@@ -42,10 +42,10 @@ def miller_rabin(n: int, k: int):
         False, jos luku ei varmasti ole alkuluku"""
     
     if k <= 0:
-        return "k must be greater than 0"
+        raise ValueError("k must be greater than 0")
     if n < 2:
-        return "n must be greater than 2"
-    if n in [2, 3, 5, 7]:
+        raise ValueError("n must be greater than 1")
+    if n in [2, 3]:
         return True
     if n % 2 == 0:
         return False
@@ -99,8 +99,18 @@ def euclidean(a: int, b: int):
     return a
 
 def extended_euclidean(a: int, b:int):
+    """Laskee kokonaisluvuille a ja b Bezoutin kertoimet x ja y siten, että a * x + b * y = gcd(a, b).
+
+    Args:
+        a (int): Laskennassa käytettävä kokonaisluku.
+        b (int): Laskennassa käytettävä kokonaisluku.
+
+    Returns:
+        Tuple[x: int, y: int]: Bezoutin kertoimet tuplena.
     """
-    """
+
+    if a == b == 0:
+        raise ValueError("Both values cannot be 0")
 
     s = 0
     old_s = 1
