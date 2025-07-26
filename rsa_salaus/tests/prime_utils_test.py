@@ -28,17 +28,27 @@ def test_sieve_large():
 
 def test_miller_rabin_small_n():
     with pytest.raises(ValueError, match="n must be greater than 1"):
-        miller_rabin(1, 1)
+        miller_rabin(1, 40)
 
 def test_miller_rabin_2():
-    assert miller_rabin(2, 1) == True
+    assert miller_rabin(2, 40) == True
 
 def test_miller_rabin_even_n():
-    assert miller_rabin(982, 1) == False
+    numbers = []
+    for i in range(1000, 1100):
+        if i % 2 == 0:
+            numbers.append(i)
+    
+    for number in numbers:
+        assert miller_rabin(number, 40) == False
 
-def test_miller_rabin_small_k():
+def test_miller_rabin_zero_k():
     with pytest.raises(ValueError, match="k must be greater than 0"):
         miller_rabin(3, 0)
+
+def test_miller_rabin_negative_k():
+    with pytest.raises(ValueError, match="k must be greater than 0"):
+        miller_rabin(3, -1)
 
 def test_miller_rabin_5000():
     numbers = sieve_of_eratosthenes(5000)
@@ -60,9 +70,8 @@ def test_miller_rabin_not_primes():
 
     numbers = []
     for i in range(3, 1223):
-        if i % 2 != 0:
-            if i not in primes:
-                numbers.append(i)
+        if i not in primes:
+            numbers.append(i)
 
     for number in numbers:
         assert miller_rabin(number, 40) == False
@@ -75,9 +84,8 @@ def test_miller_rabin_big_not_primes():
     
     non_primes = []
     for i in range(611693, 611953):
-        if i % 2 != 0:
-            if i not in primes:
-                non_primes.append(i)
+        if i not in primes:
+            non_primes.append(i)
 
     for number in non_primes:
         assert miller_rabin(number, 40) == False
@@ -169,10 +177,15 @@ def test_extended_euclidean_large():
     gcd = euclidean(5776, 8334)
     assert 5776 * x + 8334 * y == gcd
 
-def test_extended_euclidean_neg():
+def test_extended_euclidean_one_neg():
     x, y = extended_euclidean(-23, 19)
     gcd = euclidean(-23, 19)
     assert -23 * x + 19 * y == gcd
+
+def test_extended_euclidean_both_neg():
+    x, y = extended_euclidean(-23, -19)
+    gcd = euclidean(-23, -19)
+    assert -23 * x + -19 * y == gcd
 
 def test_extended_euclidean_both_zero():
     with pytest.raises(ValueError, match="Both values cannot be 0"):
