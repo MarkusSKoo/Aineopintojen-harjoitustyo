@@ -4,7 +4,7 @@
 
 Harjoitustyössä käytettävien testien tavoite on varmistaa, että algoritmit toimivat odotetulla tavalla, jotta niitä voidaan käyttää luotettavasti viestien salaamiseen.
 
-## Yksikkötestaus
+## Yksikkötestaus: prime_utils
 
 Testattavat algoritmit: sieve_of_eratosthenes, miller_rabin, euclidean ja extended_euclidean.
 
