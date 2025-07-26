@@ -1,3 +1,8 @@
+"""
+pirme_utils sisältää tarpeellisia funktioita alkulukujen etsimiseen ja
+käsittelyyn sekä apufunktioita salauksen toteuttamista varten.
+"""
+
 import random
 
 def sieve_of_eratosthenes(n: int):
@@ -8,7 +13,7 @@ def sieve_of_eratosthenes(n: int):
 
     Returns:
         list[int]: Löydetyt alkuluvut listaformaatissa"""
-    
+
     if n <= 1:
         raise ValueError("Input must be greater than 1")
 
@@ -20,12 +25,12 @@ def sieve_of_eratosthenes(n: int):
     numbers_to_n[1] = False
 
     for p in range(2, n + 1):
-        if numbers_to_n[p] == True:
+        if numbers_to_n[p] is True:
             for multiple in range(p * p, n + 1, p):
                 numbers_to_n[multiple] = False
 
     for i, value in enumerate(numbers_to_n):
-        if value == True:
+        if value is True:
             primes.append(i)
 
     return primes
@@ -40,7 +45,7 @@ def miller_rabin(n: int, k: int):
     Returns:
         True, jos luku on todennäköisesti alkuluku.
         False, jos luku ei varmasti ole alkuluku"""
-    
+
     if k <= 0:
         raise ValueError("k must be greater than 0")
     if n < 2:
@@ -49,7 +54,7 @@ def miller_rabin(n: int, k: int):
         return True
     if n % 2 == 0:
         return False
-    
+
     d = n - 1
     s = 0
 
@@ -60,19 +65,18 @@ def miller_rabin(n: int, k: int):
     for _ in range(k):
         a = random.randint(2, n - 2)
         x = pow(a, d, n)
-        if x == 1 or x == n-1:
+        if x in (1, n - 1):
             continue
 
-        else:
-            for _ in range(s):
-                y = pow(x, 2, n)
-                if y == 1 and x != 1 and x != n - 1:
-                    return False
-                
-                x = y
-            if y != 1:
+        for _ in range(s):
+            y = pow(x, 2, n)
+            if y == 1 and x != 1 and x != n - 1:
                 return False
-        
+
+            x = y
+        if y != 1:
+            return False
+
     return True
 
 def euclidean(a: int, b: int):
@@ -84,14 +88,14 @@ def euclidean(a: int, b: int):
         
     Returns:
         int: Palauttaa kokonaisluvun, joka on suurin yhteinen tekijä."""
-    
+
     if a == b == 0:
         raise ValueError("Both values cannot be 0")
     if a == 0:
         return abs(b)
     if b == 0:
         return abs(a)
-    
+
     while b != 0:
         t = b
         b = a % b
@@ -99,7 +103,8 @@ def euclidean(a: int, b: int):
     return a
 
 def extended_euclidean(a: int, b:int):
-    """Laskee kokonaisluvuille a ja b Bezoutin kertoimet x ja y siten, että a * x + b * y = gcd(a, b).
+    """Laskee kokonaisluvuille a ja b Bezoutin kertoimet x ja y
+    siten, että a * x + b * y = gcd(a, b).
 
     Args:
         a (int): Laskennassa käytettävä kokonaisluku.
@@ -124,7 +129,7 @@ def extended_euclidean(a: int, b:int):
 
     if b != 0:
         bezout_t = (old_r - old_s * a) // b
-    
+
     else:
         bezout_t = 0
 
