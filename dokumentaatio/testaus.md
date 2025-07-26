@@ -65,8 +65,8 @@ Name                            Stmts   Miss Branch BrPart  Cover   Missing
 src/rsa_salaus/__init__.py          0      0      0      0   100%
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 tests/__init__.py                   0      0      0      0   100%
-tests/prime_utils_test.py         137      0     32      0   100%
+tests/prime_utils_test.py         141      0     32      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             208      0     78      0   100%
+TOTAL                             212      0     78      0   100%
 ```
 
