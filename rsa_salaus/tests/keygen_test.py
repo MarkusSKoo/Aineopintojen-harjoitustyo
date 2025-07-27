@@ -7,10 +7,10 @@ import pytest
 from src.rsa_salaus.keygen import (
     generate_1024bit_number,
     check_primality_sieve,
-    check_primality_miller_rabin,
     generate_prime,
     generate_keypair
 )
+from src.rsa_salaus.prime_utils import miller_rabin
 
 class TestGenerate1024BitNumber():
     """Testaa generate_1024bit_number() -funktion toimintaa"""
@@ -72,7 +72,7 @@ class TestPrimeGeneration():
     def test_generate_prime(self):
         prime = generate_prime()
         assert prime.bit_length() == 1024
-        assert check_primality_miller_rabin(prime) is True
+        assert miller_rabin(prime, 40) is True
 
     def test_generate_keypair(self):
         time_before = time.time()
@@ -88,5 +88,5 @@ class TestPrimeGeneration():
         assert p.bit_length() == 1024
         assert q.bit_length() == 1024
 
-        assert check_primality_miller_rabin(p) is True
-        assert check_primality_miller_rabin(q) is True
+        assert miller_rabin(p, 40) is True
+        assert miller_rabin(q, 40) is True

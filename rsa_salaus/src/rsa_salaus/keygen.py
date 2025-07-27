@@ -43,9 +43,6 @@ def check_primality_sieve(n: int):
 
     return True
 
-def check_primality_miller_rabin(n: int):
-    return miller_rabin(n, 40)
-
 def generate_prime():
     """
     Luo 1024-bittisen luvun, joka on todennäköisesti alkuluku
@@ -53,7 +50,7 @@ def generate_prime():
     while True:
         number = generate_1024bit_number()
         if check_primality_sieve(number):
-            if check_primality_miller_rabin(number):
+            if miller_rabin(number, 40):
                 return number
 
 def generate_keypair():
