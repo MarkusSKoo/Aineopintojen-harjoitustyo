@@ -6,8 +6,8 @@ import time
 import pytest
 from src.rsa_salaus.keygen import (
     generate_1024bit_number,
-    check_primarility_sieve,
-    check_primarility_miller_rabin,
+    check_primality_sieve,
+    check_primality_miller_rabin,
     generate_prime,
     generate_keypair
 )
@@ -17,7 +17,7 @@ class TestGenerate1024BitNumber():
 
     def setup_method(self):
         self.number = generate_1024bit_number() # pylint: disable=attribute-defined-outside-init
-
+        
     def test_generate_1024bit_number_length(self):
         assert self.number.bit_length() == 1024
 
@@ -29,15 +29,15 @@ class TestGenerate1024BitNumber():
         b = generate_1024bit_number()
         assert a != b
 
-class TestCheckPrimarilitySieve():
+class TestCheckPrimalitySieve():
     """Testaa check_primarility_sieve -funktion toimintaa"""
 
-    def test_check_primarility_sieve_small_primes(self):
+    def test_check_primality_sieve_small_primes(self):
         small_primes = [2, 3, 5, 7, 11, 13, 73, 79, 83]
         for sm in small_primes:
-            assert check_primarility_sieve(sm) is True
+            assert check_primality_sieve(sm) is True
 
-    def test_check_primarility_sieve_large_primes(self):
+    def test_check_primality_sieve_large_primes(self):
         large_primes = [
             17977, 10619863, 6620830889, 80630964769, 228204732751, 1171432692373,
             1398341745571, 10963707205259, 15285151248481, 10657331232548839,
@@ -45,26 +45,26 @@ class TestCheckPrimarilitySieve():
         ]
 
         for lp in large_primes:
-            assert check_primarility_sieve(lp) is True
+            assert check_primality_sieve(lp) is True
 
-    def test_check_primarility_sieve_small_nonprimes(self):
+    def test_check_primality_sieve_small_nonprimes(self):
         non_primes = [24, 49, 52, 81, 99]
 
         for np in non_primes:
-            assert check_primarility_sieve(np) is False
+            assert check_primality_sieve(np) is False
 
-    def test_check_primarility_sieve_large_nonprimes(self):
+    def test_check_primality_sieve_large_nonprimes(self):
         big_non_primes = [5342, 6609, 10765, 11851]
 
         for bnp in big_non_primes:
-            assert check_primarility_sieve(bnp) is False
+            assert check_primality_sieve(bnp) is False
 
-    def test_check_primarility_sieve_too_small(self):
+    def test_check_primality_sieve_too_small(self):
         too_small = [1, 0, -5]
 
         for ts in too_small:
             with pytest.raises(ValueError, match="n must be greater than 1"):
-                check_primarility_sieve(ts)
+                check_primality_sieve(ts)
 
 class TestPrimeGeneration():
     """Testaa alkulukujen generoimiseen liittyvien funktioiden toimintaa"""
@@ -72,7 +72,7 @@ class TestPrimeGeneration():
     def test_generate_prime(self):
         prime = generate_prime()
         assert prime.bit_length() == 1024
-        assert check_primarility_miller_rabin(prime) is True
+        assert check_primality_miller_rabin(prime) is True
 
     def test_generate_keypair(self):
         time_before = time.time()
@@ -88,5 +88,5 @@ class TestPrimeGeneration():
         assert p.bit_length() == 1024
         assert q.bit_length() == 1024
 
-        assert check_primarility_miller_rabin(p) is True
-        assert check_primarility_miller_rabin(q) is True
+        assert check_primality_miller_rabin(p) is True
+        assert check_primality_miller_rabin(q) is True

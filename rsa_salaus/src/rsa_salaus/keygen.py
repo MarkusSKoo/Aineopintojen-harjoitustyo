@@ -17,7 +17,7 @@ def generate_1024bit_number():
     number |= 1
     return number
 
-def check_primarility_sieve(n: int):
+def check_primality_sieve(n: int):
     """
     Testaa ovatko pienet alkuluvut luvun osatekijöitä.
 
@@ -43,7 +43,7 @@ def check_primarility_sieve(n: int):
 
     return True
 
-def check_primarility_miller_rabin(n: int):
+def check_primality_miller_rabin(n: int):
     return miller_rabin(n, 40)
 
 def generate_prime():
@@ -52,8 +52,8 @@ def generate_prime():
     """
     while True:
         number = generate_1024bit_number()
-        if check_primarility_sieve(number):
-            if check_primarility_miller_rabin(number):
+        if check_primality_sieve(number):
+            if check_primality_miller_rabin(number):
                 return number
 
 def generate_keypair():
