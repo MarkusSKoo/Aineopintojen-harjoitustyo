@@ -18,8 +18,6 @@ Kattavuusraportit saadaan komennoilla:
 
 ```coverage run --branch -m pytest src tests; coverage report -m```
 
-HUOM: Tämän hetken testausraportissa otettu huomioon vain prime_utils_test.py, muiden testien kehittäminen on vielä kesken.
-
 Sijainti: tests/prime_utils_test.py
 
 ## Testisyötteet ja kattavuus
@@ -62,16 +60,38 @@ Euclidean toimintaa testataan vielä erikseen samoilla syötteillä, sekä yksin
 
 Algoritmi laskee kokonaisluvuille a ja b Bezoutin kertoimet x ja y siten, että a * x + b * y = gcd(a, b). Nyt x ja y voivat saada useita eri arvoja, jotka tyydyttäisivät tämän yhtälön, joten testaamisessa on käytetty siksi suurinta yhteistä tekijää euclidean algoritmista. Algoritmia on testattu useilla pienillä luvuilla mukaan lukien alkulukuja ja coprime-lukuja. Lisäksi on testattu algoritmien toimintaa toisen tai molempien arvon ollessa nolla tai negatiivinen, samoilla arvoilla sekä suurilla arvoilla.
 
+## Yksikkötestaus: keygen
+
+### generate_1024bit_number
+
+Tämän funktion toimintaa testataan tuottamalla 1024 bittiä pitkä numero, jonka pituus testataan bit_length() -metodilla. Sen jälkeen tarkistetaan onko luku parillinen. Sitten generoidaan kaksi erillistä lukua ja vertaillaan, etteivät ne ole samat. Näillä testeillä varmistetaan, että funktio tuottaa oikeanpituisia, parittomia ja satunnaisia lukuja.
+
+### check_primality_sieve
+
+Alkuseulonnan tarkoitus on tehdä alkulukujen löytämisestä nopeampaa. Useimmat luvut eivät ole alkulukuja ja suurin osa saadaan kiinni seulomalla luvun jaollisuus pienillä alkuluvuilla. Funktion toimintaa testataan suurilla alkuluvuilla, jotta varmistutaan, että näitä ei hylätä aiheettomasti. Seuraavaksi testataan muutamia alkulukujen kertomia, jotta seula ei päästä näitä läpi. Lopuksi tarkastellaan vielä rajatapaukset, jotta ValueError nousee odotetusti.
+
+### generate_prime
+
+Funktio tuottaa 1024 bittiä pitkiä alkulukuja. Sen toimintaa testataan tuottamalla luku, jonka pituus tarkastetaan .bit_length() -metodilla. Tämän jälkeen luku annetaan miller_rabinille tarkasteltavaksi ja vahvistettavaksi. miller_rabinin toimintaa on testattu aiemmin, joten sitä ei testata tässä kohtaa uudestaan.
+
+### generate_keypair
+
+Funktio tuottaa avainlukuparin, joista kummatkin ovat 1024 bittiä pitkiä. Lukujen tulee olla eri lukuja, tämä tarkistetaan vertailuoperaattorilla. Generoinnin nopeutta tarkistetaan time.time() -metodilla, tässä hyväksyttäväksi aikarajaksi on asetettu 4 sekuntia. Molempien lukujen koko tarkastetaan .bit_length() -metodilla, jonka jälkeen luvut annetaan miller_rabinin tarkastettavaksi.
+
 ## Kattavuusraportti
 
 ```
 Name                            Stmts   Miss Branch BrPart  Cover   Missing
 ---------------------------------------------------------------------------
 src/rsa_salaus/__init__.py          0      0      0      0   100%
+src/rsa_salaus/keygen.py           27      0     12      1    97%   63->60
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 tests/__init__.py                   0      0      0      0   100%
-tests/prime_utils_test.py         141      0     32      0   100%
+tests/keygen_test.py               46      0      6      0   100%
+tests/prime_utils_test.py         145      0     34      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             212      0     78      0   100%
+TOTAL                             289      0     98      1    99%
 ```
+
+Testikattavuus ei ole tällä hetkellä 100% johtuen generate-keypair() -funktion while-silmukasta, joka ei käytännössä koskaan mene uudelle kierrokselle. Tämä on tavoitekin, myöhemmin lisään testeihin mockauksen avulla keinon ajaa vähintään yksi uusintakierros.
 
