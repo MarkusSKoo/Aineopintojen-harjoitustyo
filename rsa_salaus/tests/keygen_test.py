@@ -32,11 +32,6 @@ class TestGenerate1024BitNumber():
 class TestCheckPrimalitySieve():
     """Testaa check_primarility_sieve -funktion toimintaa"""
 
-    def test_check_primality_sieve_small_primes(self):
-        small_primes = [2, 3, 5, 7, 11, 13, 73, 79, 83]
-        for sm in small_primes:
-            assert check_primality_sieve(sm) is True
-
     def test_check_primality_sieve_large_primes(self):
         large_primes = [
             17977, 10619863, 6620830889, 80630964769, 228204732751, 1171432692373,
@@ -47,12 +42,6 @@ class TestCheckPrimalitySieve():
         for lp in large_primes:
             assert check_primality_sieve(lp) is True
 
-    def test_check_primality_sieve_small_nonprimes(self):
-        non_primes = [24, 49, 52, 81, 99]
-
-        for np in non_primes:
-            assert check_primality_sieve(np) is False
-
     def test_check_primality_sieve_large_nonprimes(self):
         big_non_primes = [5342, 6609, 10765, 11851]
 
@@ -60,10 +49,10 @@ class TestCheckPrimalitySieve():
             assert check_primality_sieve(bnp) is False
 
     def test_check_primality_sieve_too_small(self):
-        too_small = [1, 0, -5]
+        too_small = [-5, 0, 247]
 
         for ts in too_small:
-            with pytest.raises(ValueError, match="n must be greater than 1"):
+            with pytest.raises(ValueError, match="n must be greater than 4500"):
                 check_primality_sieve(ts)
 
 class TestPrimeGeneration():

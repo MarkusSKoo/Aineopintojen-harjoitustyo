@@ -160,6 +160,7 @@ class TestEuclidean():
 
             if a == b:
                 assert euclidean(a, b) == a
+
             else:
                 assert euclidean(a, b) == 1
 
