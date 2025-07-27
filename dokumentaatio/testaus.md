@@ -93,5 +93,5 @@ tests/prime_utils_test.py         145      0     34      0   100%
 TOTAL                             289      0     98      1    99%
 ```
 
-Testikattavuus ei ole tällä hetkellä 100% johtuen generate-keypair() -funktion while-silmukasta, joka ei käytännössä koskaan mene uudelle kierrokselle. Tämä on tavoitekin, myöhemmin lisään testeihin mockauksen avulla keinon ajaa vähintään yksi uusintakierros.
+Testikattavuus ei ole tällä hetkellä 100% johtuen generate_keypair() -funktion while-silmukasta, joka ei käytännössä koskaan mene uudelle kierrokselle. Tämä on tavoitekin, myöhemmin lisään testeihin mockauksen avulla keinon ajaa vähintään yksi uusintakierros.
 
