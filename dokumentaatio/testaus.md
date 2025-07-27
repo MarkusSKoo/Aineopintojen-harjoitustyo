@@ -41,6 +41,10 @@ test_miller_rabin_5000() testaa varmistaako miller_rabin luvut alkuluvuiksi aiem
 
 Testi test_miller_rabin_not_primes() testaa, palauttaako funktio ei-alkuluvuista False, kun tuotetaan lista luvuista, joista poistetaan alkuluvut sieve_of_eratosthenes avulla. Edellä mainitusta syystä test_miller_rabin_big_not_primes() testaa listaa ei-alkuluvuista, joista on kovakoodaamalla poistettu raja-arvojen sisältä kaikki tiedetyt alkuluvut.
 
+Carmichaelsin luvut ovat lukuja, jotka vaikuttavat alkuluvuilta ja tietyissä testeissä käyttäytyvät, kuten alkuluvut, mutta eivät ole alkulukuja. Testi test_miller_rabin_carmichael() testaa algoritmin toimintaa 7 ensimmäisellä carmichaelin luvulla, lähde:
+
+[Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
+
 Lopuksi test_miller_rabin_2048_primes() testaa algoritmin toimivuutta kahdella erittäin suurella alkuluvulla, joiden koko ylittää reilusti salauksessa tarvittavien alkulukujen koon. Tällä haetaan lisävarmuutta siihen, että algoritmia voidaan käyttää suunniteltua ohjelmaa varten. Luvut on kopioitu täältä:
 
 [Stackoverflow](https://stackoverflow.com/questions/22079315/i-need-2048bit-primes-in-order-to-test-the-upper-limits-of-my-rsa-program)
