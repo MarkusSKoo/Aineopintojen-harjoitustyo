@@ -4,9 +4,9 @@
 
 Harjoitustyössä käytettävien testien tavoite on varmistaa, että algoritmit toimivat odotetulla tavalla, jotta niitä voidaan käyttää luotettavasti viestien salaamiseen.
 
-## Yksikkötestaus: prime_utils
+## Yksikkötestaus
 
-Testattavat algoritmit: sieve_of_eratosthenes, miller_rabin, euclidean ja extended_euclidean.
+Testattavat tiedostot: prime_utils.py, keygen.py
 
 Testaustapa: Pytest.
 
@@ -20,7 +20,7 @@ Kattavuusraportit saadaan komennoilla:
 
 Sijainti: tests/prime_utils_test.py
 
-## Testisyötteet ja kattavuus
+## Testisyötteet
 
 ### sieve_of_eratosthenes
 
