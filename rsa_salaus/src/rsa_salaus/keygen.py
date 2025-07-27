@@ -29,10 +29,18 @@ def check_primarility_sieve(n: int):
         False, jos luku ei ole alkuluku.
     """
 
+    if n < 2:
+        raise ValueError("n must be greater than 1")
+
     small_primes = sieve_of_eratosthenes(4500)
+
+    if n in small_primes:
+        return True
+
     for prime in small_primes:
         if n % prime == 0:
             return False
+
     return True
 
 def check_primarility_miller_rabin(n: int):
