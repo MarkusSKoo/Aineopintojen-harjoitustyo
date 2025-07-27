@@ -16,8 +16,9 @@ Kansiossa rsa_salaus testit voidaan toistaa komennolla:
 
 Kattavuusraportit saadaan komennoilla:
 
-```coverage run --branch -m pytest```
-```coverage report -m```
+```coverage run --branch -m pytest src tests; coverage report -m```
+
+HUOM: Tämän hetken testausraportissa otettu huomioon vain prime_utils_test.py, muiden testien kehittäminen on vielä kesken.
 
 Sijainti: tests/prime_utils_test.py
 
