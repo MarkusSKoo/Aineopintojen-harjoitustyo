@@ -1,4 +1,4 @@
-Tällä viikolla ohjelmoin loput tarvittavat apufunktiot alkulukujen etsimistä ja generoimista varten, näitä ovat Miller-Rabin, Euclidean ja laajennettu Euclidean algoritmi. Lisäksi tein näihin yksikkötestejä, joista osa testaa useamman funktion yhtäaikaista toimintaa.
+Tällä viikolla ohjelmoin loput tarvittavat apufunktiot alkulukujen etsimistä ja generoimista varten, näitä ovat Miller-Rabin, Euclidean ja laajennettu Euclidean algoritmi. Lisäksi tein näihin yksikkötestejä, joista osa testaa useamman funktion yhtäaikaista toimintaa. Korjasin myös koodin luettavuutta Pylintin avulla. Lisäksi aloitin testausdokumentin kirjoittamisen niiltä osin, kuin ohjelmaa on testattu.
 
 Ohjelma edistyi melkoisin harppauksin, mutta en aivan vielä saanut kaikkia ydintoimintoja täysin valmiiksi, eikä ohjelmalla vielä ole valmista käyttöliittymää. Jatkan näiden tekemistä seuraavaksi.
 
