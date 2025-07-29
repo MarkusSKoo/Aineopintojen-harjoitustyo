@@ -15,7 +15,7 @@ def main():
     print(f"q: {q}")
     print()
     print(f"Aikaa avainparin luomiseen kului {end_time - start_time} sekuntia")
-    
+
 
 if __name__ == "__main__":
     main()
