@@ -18,8 +18,6 @@ Kattavuusraportit saadaan komennoilla:
 
 ```coverage run --branch -m pytest src tests; coverage report -m```
 
-Sijainti: tests/prime_utils_test.py
-
 ## Testisyötteet
 
 ### sieve_of_eratosthenes
