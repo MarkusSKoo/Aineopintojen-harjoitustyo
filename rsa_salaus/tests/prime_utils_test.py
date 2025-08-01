@@ -47,11 +47,11 @@ class TestMillerRabin():
     """Yksikkötesti miller_rabin -funktiolle"""
 
     def setup_method(self):
-        self.verified_primes = []
+        self.verified_primes = [] # pylint: disable=attribute-defined-outside-init
 
         with open('tests/primes.csv', newline='') as file:
             data = csv.reader(file)
-            next(data)
+            next(data) # Ohittaa ensimmäisen rivin
 
             for row in data:
                 self.verified_primes.append(int(row[1], 16))
