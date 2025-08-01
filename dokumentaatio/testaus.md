@@ -76,7 +76,7 @@ Funktio tuottaa 1024 bittiä pitkiä alkulukuja. Sen toimintaa testataan tuottam
 
 ### generate_keypair
 
-Funktio tuottaa avainlukuparin, joista kummatkin ovat 1024 bittiä pitkiä. Lukujen tulee olla eri lukuja, tämä tarkistetaan vertailuoperaattorilla. Generoinnin nopeutta tarkistetaan time.time() -metodilla, tässä hyväksyttäväksi aikarajaksi on asetettu 4 sekuntia. Molempien lukujen koko tarkastetaan .bit_length() -metodilla, jonka jälkeen luvut annetaan miller_rabinin tarkastettavaksi.
+Funktio tuottaa avainlukuparin, joista kummatkin ovat 1024 bittiä pitkiä. Lukujen tulee olla eri lukuja, tämä tarkistetaan vertailuoperaattorilla. Generoinnin nopeutta tarkistetaan time.time() -metodilla, tässä hyväksyttäväksi aikarajaksi on asetettu 4 sekuntia. Molempien lukujen koko tarkastetaan .bit_length() -metodilla, jonka jälkeen luvut annetaan miller_rabinin tarkastettavaksi. Koska generate_keypair() -funktio ei käytännössä koskaan tuota kahta samaa lukua avainparille, testikattavuudesta jää while True-silmukasta ajamatta uusintakierros. Tätä varten on mockattu test_generate_keypair_mocked, jonka tarkoitus on testata while-silmukan oikeanlaista toimintaa.
 
 ## Kattavuusraportti
 
@@ -84,14 +84,13 @@ Funktio tuottaa avainlukuparin, joista kummatkin ovat 1024 bittiä pitkiä. Luku
 Name                            Stmts   Miss Branch BrPart  Cover   Missing
 ---------------------------------------------------------------------------
 src/rsa_salaus/__init__.py          0      0      0      0   100%
-src/rsa_salaus/keygen.py           27      0     12      1    97%   63->60
+src/rsa_salaus/keygen.py           27      0     12      0   100%
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 tests/__init__.py                   0      0      0      0   100%
-tests/keygen_test.py               46      0      6      0   100%
-tests/prime_utils_test.py         145      0     34      0   100%
+tests/keygen_test.py               54      0      6      0   100%
+tests/prime_utils_test.py         155      0     38      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             289      0     98      1    99%
+TOTAL                             307      0    102      0   100%
+(rsa-salaus-py3.12) markuskauhanen@Markus-MacBook-Pro rsa_salaus % 
 ```
-
-Testikattavuus ei ole tällä hetkellä 100% johtuen generate_keypair() -funktion while-silmukasta, joka ei käytännössä koskaan mene uudelle kierrokselle. Tämä on tavoitekin, myöhemmin lisään testeihin mockauksen avulla keinon ajaa vähintään yksi uusintakierros.
 
