@@ -3,6 +3,7 @@ keygen_test.py suorittaa yksikkötestejä keygen.py-tiedostossa oleville funktio
 """
 
 import time
+from unittest.mock import patch
 import pytest
 from src.rsa_salaus.keygen import (
     generate_1024bit_number,
@@ -79,3 +80,15 @@ class TestPrimeGeneration():
 
         assert miller_rabin(p, 40) is True
         assert miller_rabin(q, 40) is True
+
+    @patch("src.rsa_salaus.keygen.generate_prime")
+    def test_generate_keypair_mocked(self, mock):
+        """Testaa generate_keypair() -funktion toimintaa identtisillä paluuarvoilla"""
+
+        mock.side_effect = [13, 13, 19, 5]
+        keypair = generate_keypair()
+
+        p = keypair[0]
+        q = keypair[1]
+
+        assert p != q
