@@ -12,7 +12,7 @@ from src.rsa_salaus.prime_utils import (
 )
 
 class TestSieveOfEratosthenes():
-    """yksikkötesti sieve_of_eratosthenes -funktiolle"""
+    """yksikkötestit sieve_of_eratosthenes -funktiolle"""
 
     def test_sieve_small(self):
         assert sieve_of_eratosthenes(10) == [2, 3, 5, 7]
@@ -44,12 +44,12 @@ class TestSieveOfEratosthenes():
         ]
 
 class TestMillerRabin():
-    """Yksikkötesti miller_rabin -funktiolle"""
+    """Yksikkötestit miller_rabin -funktiolle"""
 
     def setup_method(self):
         self.verified_primes = [] # pylint: disable=attribute-defined-outside-init
 
-        with open('tests/primes.csv', newline='') as file:
+        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
             data = csv.reader(file)
             next(data) # Ohittaa ensimmäisen rivin
 
@@ -90,6 +90,7 @@ class TestMillerRabin():
             7727, 7741, 7753, 7757, 7759, 7789, 7793, 7817, 7823, 7829,
             7841, 7853, 7867, 7873, 7877, 7879, 7883, 7901, 7907, 7919
         ]
+
         for number in numbers:
             assert miller_rabin(number, 40) is True
 
@@ -98,6 +99,7 @@ class TestMillerRabin():
             611693, 611707, 611729, 611753, 611791, 611801, 611803, 611827, 611833, 611837,
             611839, 611873, 611879, 611887, 611903, 611921, 611927, 611939, 611951, 611953
         ]
+
         for number in numbers:
             assert miller_rabin(number, 40) is True
 
@@ -142,7 +144,7 @@ class TestMillerRabin():
                 assert miller_rabin(prime * mp, 40) is False
 
 class TestEuclidean():
-    """Yksikkötesti euclidean -funktiolle"""
+    """Yksikkötestit euclidean -funktiolle"""
 
     def test_euclidean_small_common_divisor(self):
         assert euclidean(48, 18) == 6
@@ -195,7 +197,7 @@ class TestEuclidean():
         assert euclidean(-48, 18) == 6
 
 class TestExtendedEuclidean():
-    """Yksikkötesti extended_euclidean -funktiolle"""
+    """Yksikkötestit extended_euclidean -funktiolle"""
 
     def test_extended_euclidean_common_divisor(self):
         x, y = extended_euclidean(30, 12)

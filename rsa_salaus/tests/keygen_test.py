@@ -18,7 +18,7 @@ class TestGenerate1024BitNumber():
 
     def setup_method(self):
         self.number = generate_1024bit_number() # pylint: disable=attribute-defined-outside-init
-        
+
     def test_generate_1024bit_number_length(self):
         assert self.number.bit_length() == 1024
 

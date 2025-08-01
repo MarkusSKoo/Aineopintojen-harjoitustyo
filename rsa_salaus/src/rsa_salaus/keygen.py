@@ -14,8 +14,8 @@ def generate_1024bit_number():
     """
 
     number = random.getrandbits(1024)
-    number |= (1 << (1024 - 1))
-    number |= 1
+    number |= (1 << (1024 - 1)) # Asettaa suurimman bitin arvoksi 1
+    number |= 1 # Asettaa pienimmän bitin arvoksi 1 tuottaen parittoman luvun
     return number
 
 def check_primality_sieve(n: int):
