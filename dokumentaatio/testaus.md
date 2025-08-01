@@ -44,9 +44,9 @@ Carmichaelsin luvut ovat lukuja, jotka vaikuttavat alkuluvuilta ja tietyissä te
 
 [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 
-Lopuksi test_miller_rabin_2048_primes() testaa algoritmin toimivuutta kahdella erittäin suurella alkuluvulla, joiden koko ylittää reilusti salauksessa tarvittavien alkulukujen koon. Tällä haetaan lisävarmuutta siihen, että algoritmia voidaan käyttää suunniteltua ohjelmaa varten. Luvut on kopioitu täältä:
+Lopuksi test_miller_rabin_2048_primes() testaa algoritmin toimivuutta muutamalla erittäin suurella verifioidulla alkuluvulla, joiden koko ylittää reilusti salauksessa tarvittavien alkulukujen koon. Tällä haetaan lisävarmuutta siihen, että algoritmia voidaan käyttää suunniteltua ohjelmaa varten. Samojen lukujen tuloja testataan myös, jotta voidaan varmistaa algoritmin hylkäävän suuret komposiittiluvut. Luvut on kopioitu täältä:
 
-[Stackoverflow](https://stackoverflow.com/questions/22079315/i-need-2048bit-primes-in-order-to-test-the-upper-limits-of-my-rsa-program)
+[rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
 
 ### euclidean
 
