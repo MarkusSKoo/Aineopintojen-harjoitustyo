@@ -5,7 +5,9 @@ keygen.py generoi RSA-salauksessa tarvittavat avainparit.
 import random
 from rsa_salaus.prime_utils import (
     sieve_of_eratosthenes,
-    miller_rabin
+    miller_rabin,
+    euclidean,
+    extended_euclidean
 )
 
 def generate_1024bit_number():
@@ -61,4 +63,36 @@ def generate_keypair():
         p = generate_prime()
         q = generate_prime()
         if p != q:
-            return (p, q)
+            return p, q
+
+def generate_keys():
+    """Luo julkisen ja yksityisen avaimen.
+    
+    Returns:
+        Tuple[Tuple[int, int], Tuple[int, int]]:
+        Julkinen avain, yksityinen avain"""
+
+    p, q = generate_keypair()
+    n = p * q
+    phi_n = (p - 1) * (q - 1)
+
+    e_candidates = [11939, 19391, 19937, 37199, 39119, 71993, 91193, 93719, 93911, 99371]
+
+    for e_c in e_candidates:
+        if euclidean(phi_n, e_c) == 1:
+            e = e_c
+            break
+
+    else:
+        while True:
+            e = random.randint(1, 100000)
+            if euclidean(phi_n, e) == 1:
+                break
+
+    d, _ = extended_euclidean(e, phi_n)
+    d = d % phi_n
+
+    public_key = n, e
+    private_key = n, d
+
+    return public_key, private_key
