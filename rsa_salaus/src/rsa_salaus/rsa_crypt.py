@@ -22,7 +22,7 @@ class MessageCryption:
 
         message_bytes = message.encode('utf-8') # Jakaa viestin tavuihin
         message_int = int.from_bytes(message_bytes, byteorder='big')
-        # Muuntaa tavut kokonaisluvuiksi (big endian)
+        # Muuntaa tavut kokonaisluvuiksi (big endian järjestys)
 
         if message_int >= n:
             raise ValueError("Too long message")

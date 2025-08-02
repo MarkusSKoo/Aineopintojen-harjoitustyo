@@ -72,8 +72,11 @@ def generate_rsa_keys(debug=False):
         Tuple[Tuple[int, int], Tuple[int, int]]:
         Julkinen avain, yksityinen avain"""
 
-    p, q = generate_keypair()
-    n = p * q
+    while True:
+        p, q = generate_keypair()
+        n = p * q
+        if n.bit_length() >= 2048:
+            break
     phi_n = (p - 1) * (q - 1)
 
     e_candidates = [11939, 19391, 19937, 37199, 39119, 71993, 91193, 93719, 93911, 99371]

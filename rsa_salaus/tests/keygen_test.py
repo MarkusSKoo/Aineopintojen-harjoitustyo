@@ -113,7 +113,6 @@ class TestGenerateRsaKeys:
         self.q = self.rsa_keypair[2][1]
         self.phi_n = (self.p - 1) * (self.q - 1)
 
-
     def test_rsa_keypair_return_format(self):
         """Testaa funktion returns-arvojen formaattia debug-tilassa"""
 
@@ -148,12 +147,23 @@ class TestGenerateRsaKeys:
         assert (self.e * self.d) % self.phi_n == 1
         assert 1 <= self.d < self.phi_n - 1
 
+    def helper_for_mocking(self, a, b):
+        """Apufunktio mockaamiseen, jotta generate_rsa_keys käyttää
+        eucklidean-funktiota, kun mockaamista ei enää tarvita"""
+
+        self.counter += 1
+
+        if self.counter < 13:
+            return 0
+        return euclidean(a, b)
+
     @patch("src.rsa_salaus.keygen.euclidean")
     def test_keypair_return_format_mocked(self, mock_euclidean):
         """Yksikkötesti funktiolle, jossa euclidean:in paluuarvot
         mockattu yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
 
-        mock_euclidean.side_effect = [0] * 12 + [1]
+        self.counter = 0
+        mock_euclidean.side_effect = self.helper_for_mocking
 
         rsa_keypair = generate_rsa_keys()
         public_key = rsa_keypair[0]
