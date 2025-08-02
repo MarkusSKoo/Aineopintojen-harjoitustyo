@@ -1,20 +1,10 @@
 import time
-from rsa_salaus.keygen import generate_keypair
+from rsa_salaus.keygen import generate_rsa_keys
 
 def main():
-    start_time = time.time()
-    keypair = generate_keypair()
-    end_time = time.time()
-    p = keypair[0]
-    q = keypair[1]
-
-    print("Kokeillaan avainparin luomista")
-    print()
-    print(f"p: {p}")
-    print()
-    print(f"q: {q}")
-    print()
-    print(f"Aikaa avainparin luomiseen kului {end_time - start_time} sekuntia")
+    keypair = generate_rsa_keys()
+    public_key = keypair[0]
+    private_key = keypair[1]
 
 
 if __name__ == "__main__":
