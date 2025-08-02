@@ -65,7 +65,7 @@ def generate_keypair():
         if p != q:
             return p, q
 
-def generate_keys():
+def generate_rsa_keys():
     """Luo julkisen ja yksityisen avaimen.
     
     Returns:

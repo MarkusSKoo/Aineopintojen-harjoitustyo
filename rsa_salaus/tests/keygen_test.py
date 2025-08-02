@@ -9,7 +9,8 @@ from src.rsa_salaus.keygen import (
     generate_1024bit_number,
     check_primality_sieve,
     generate_prime,
-    generate_keypair
+    generate_keypair,
+    generate_rsa_keys
 )
 from src.rsa_salaus.prime_utils import miller_rabin
 
@@ -31,7 +32,7 @@ class TestGenerate1024BitNumber():
         assert a != b
 
 class TestCheckPrimalitySieve():
-    """Testaa check_primarility_sieve -funktion toimintaa"""
+    """Testaa check_primarility_sieve() -funktion toimintaa"""
 
     def test_check_primality_sieve_large_primes(self):
         large_primes = [
@@ -86,9 +87,49 @@ class TestPrimeGeneration():
         """Testaa generate_keypair() -funktion toimintaa identtisillä paluuarvoilla"""
 
         mock.side_effect = [13, 13, 19, 5]
+        # Testaamista varten valitsee ensimmäiselle kierrokselle identtisen arvon
         keypair = generate_keypair()
 
         p = keypair[0]
         q = keypair[1]
 
         assert p != q
+
+class TestGenerateRsaKeys:
+    """Testaa generate_rsa_keys() -funktion toimintaa"""
+
+    def test_keypair_return_format(self):
+        rsa_keypair = generate_rsa_keys()
+        public_key = rsa_keypair[0]
+        private_key = rsa_keypair[1]
+
+        assert len(rsa_keypair) == 2
+        assert len(public_key) == 2
+        assert len(private_key) == 2
+        assert public_key[0] == private_key[0]
+
+        assert isinstance(public_key[0], int)
+        assert isinstance(public_key[1], int)
+        assert isinstance(private_key[0], int)
+        assert isinstance(private_key[1], int)
+
+    @patch("src.rsa_salaus.keygen.euclidean")
+    def test_keypair_return_format_mocked(self, mock_euclidean):
+        """Yksikkötesti generate_rsa_keypair -funktiolle, jossa euclidean:in
+        paluuarvot mockattu yksikkötestien kattavuuden parantamiseksi"""
+
+        mock_euclidean.side_effect = [0] * 12 + [1]
+
+        rsa_keypair = generate_rsa_keys()
+        public_key = rsa_keypair[0]
+        private_key = rsa_keypair[1]
+
+        assert len(rsa_keypair) == 2
+        assert len(public_key) == 2
+        assert len(private_key) == 2
+        assert public_key[0] == private_key[0]
+
+        assert isinstance(public_key[0], int)
+        assert isinstance(public_key[1], int)
+        assert isinstance(private_key[0], int)
+        assert isinstance(private_key[1], int)
