@@ -76,19 +76,27 @@ Funktio tuottaa 1024 bittiä pitkiä alkulukuja. Sen toimintaa testataan tuottam
 
 Funktio tuottaa avainlukuparin, joista kummatkin ovat 1024 bittiä pitkiä. Lukujen tulee olla eri lukuja, tämä tarkistetaan vertailuoperaattorilla. Generoinnin nopeutta tarkistetaan time.time() -metodilla, tässä hyväksyttäväksi aikarajaksi on asetettu 4 sekuntia. Molempien lukujen koko tarkastetaan .bit_length() -metodilla, jonka jälkeen luvut annetaan miller_rabinin tarkastettavaksi. Koska generate_keypair() -funktio ei käytännössä koskaan tuota kahta samaa lukua avainparille, testikattavuudesta jää while True-silmukasta ajamatta uusintakierros. Tätä varten on mockattu test_generate_keypair_mocked, jonka tarkoitus on testata while-silmukan oikeanlaista toimintaa.
 
+### class TestGenerateRsaKeys
+
+Tämä luokka testaa generate_rsa_keys() -funktion toimintaa. Huomaa, että funktion debug-tila on oletuksena False, koska rsa-avainparin muodostuksessa käytettävät alkuluvut p ja q tulee hävittää turvallisuussyistä. Debug-tilan ollessa päällä nämä palautetaan funktion returns-arvoissa vain testaamiskäyttöä varten. Funktiota tulee tällöin kutsua generate_rsa_keys(debug=True), eikä käyttäjälle anneta mahdollisuutta suorittaa tällaista kutsua tai edes tietoa tällaisesta mahdollisuudesta.
+
+Testi test_rsa_keypair_return_format() varmistaa, että funktio palauttaa debug-tilassa oikean määrän oikeanlaisia arvoja. Testi test_rsa_keypair_math() varmistaa, että funktion palauttamat arvot ovat matemaattisesti oikein. n tulee olla sama sekä julkisessa, että yksityisessä avaimessa. n tulee olla p:n ja q:n tulo. p ja q tulee olla eri arvot, kummankin koon tulee olla 1024 bittiä ja niiden tulee olla alkulukuja (varmistetaan Miller-Rabinilla). e:n ja phi_n (eli (p - 1) * (q - 1)) suurin yhteinen tekijä tulee olla 1. d tulee olla väliltä [1, phi_n - 1]
+
+Testi test_keypair_return_format_mocked() varmistaa, että funktio palauttaa oikean määrän oikeanlaisia arvoja, kun debug-tila ei ole päällä, eli kuten se tuotantokäytössä olisi. Näistä arvoista puuttuu p ja q, eikä niistä siten voida päätellä funktion matemaattisen toiminnan oikeellisuutta. Nämä on tarkoituskin jättää pois, sillä p:n ja q:n arvoilla salaus pystyttäisiin murtamaan. Tässä testissä keskitytään tarkistamaan paluuarvojen oikeellisuus tuotantokäytössä. Sekä yksityisen, että julkisen avaimen sisältämä n tulee olla sama, pituudeltaan 2048 bittiä. Lisäksi tämän testin mockauksen tarkoituksena on tarkistaa funktion eri haarojen toiminta, sillä for-luupissa kutsuttu euclidean palauttaa lähes varmasti 1 ensimmäisellä alkiolla 11939 ja katkaisee silmukan suorittamisen. Näin silmukka ei koskaan etene seuraavalle kierrokselle, eikä alla olevaan else-haaraan. Else-haaran sisältämä while-silmukka on tarkoitus toimia fallback-metodina for-silmukalle.
+
 ## Kattavuusraportti
 
 ```
 Name                            Stmts   Miss Branch BrPart  Cover   Missing
 ---------------------------------------------------------------------------
 src/rsa_salaus/__init__.py          0      0      0      0   100%
-src/rsa_salaus/keygen.py           27      0     12      0   100%
+src/rsa_salaus/keygen.py           47      0     20      0   100%
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 tests/__init__.py                   0      0      0      0   100%
-tests/keygen_test.py               54      0      6      0   100%
+tests/keygen_test.py              102      0      6      0   100%
 tests/prime_utils_test.py         155      0     38      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             307      0    102      0   100%
+TOTAL                             375      0    110      0   100%
 (rsa-salaus-py3.12) markuskauhanen@Markus-MacBook-Pro rsa_salaus % 
 ```
 
