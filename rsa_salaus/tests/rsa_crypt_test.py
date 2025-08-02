@@ -51,7 +51,7 @@ class TestEncryptDecrypt:
         salatun viestin ja vertailemalla näitä keskenään"""
 
         username = "Testuser"
-        plaintext = 'This message is longer and contains special charachters, such as "!#€%&/()=?+_-'
+        plaintext = 'This message is longer and contains special charachters, such as "!#€%&/()=?+_-1234567890'
 
         encrypted_data = self.crypt.encrypt(username, plaintext, self.public_key)
         assert username == encrypted_data[0]

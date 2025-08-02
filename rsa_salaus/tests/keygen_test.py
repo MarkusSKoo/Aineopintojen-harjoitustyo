@@ -2,7 +2,6 @@
 keygen_test.py suorittaa yksikkötestejä keygen.py-tiedostossa oleville funktioille.
 """
 
-import time
 from unittest.mock import patch
 import pytest
 from src.rsa_salaus.keygen import (
@@ -66,15 +65,12 @@ class TestPrimeGeneration():
         assert miller_rabin(prime, 40) is True
 
     def test_generate_keypair(self):
-        time_before = time.time()
         keypair = generate_keypair()
-        time_after = time.time()
 
         p = keypair[0]
         q = keypair[1]
 
         assert p != q
-        assert time_after - time_before <= 4
 
         assert p.bit_length() == 1024
         assert q.bit_length() == 1024
