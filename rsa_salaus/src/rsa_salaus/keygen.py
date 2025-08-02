@@ -65,7 +65,7 @@ def generate_keypair():
         if p != q:
             return p, q
 
-def generate_rsa_keys():
+def generate_rsa_keys(debug=False):
     """Luo julkisen ja yksityisen avaimen.
     
     Returns:
@@ -90,9 +90,12 @@ def generate_rsa_keys():
                 break
 
     d, _ = extended_euclidean(e, phi_n)
-    d = d % phi_n
+    d = d % phi_n # varmistaa, että d on positiivinen luku
 
     public_key = n, e
     private_key = n, d
+
+    if debug is True:
+        return (public_key, private_key, (p, q))
 
     return public_key, private_key

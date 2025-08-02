@@ -12,7 +12,7 @@ from src.rsa_salaus.keygen import (
     generate_keypair,
     generate_rsa_keys
 )
-from src.rsa_salaus.prime_utils import miller_rabin
+from src.rsa_salaus.prime_utils import miller_rabin, euclidean
 
 class TestGenerate1024BitNumber():
     """Testaa generate_1024bit_number() -funktion toimintaa"""
@@ -95,28 +95,63 @@ class TestPrimeGeneration():
 
         assert p != q
 
+# pylint: disable=too-many-instance-attributes, attribute-defined-outside-init
 class TestGenerateRsaKeys:
     """Testaa generate_rsa_keys() -funktion toimintaa"""
 
-    def test_keypair_return_format(self):
-        rsa_keypair = generate_rsa_keys()
-        public_key = rsa_keypair[0]
-        private_key = rsa_keypair[1]
+    def setup_method(self):
+        """Asettaa testattavat paluuarvot debug-tilassa tehtäviä testejä varten"""
 
-        assert len(rsa_keypair) == 2
-        assert len(public_key) == 2
-        assert len(private_key) == 2
-        assert public_key[0] == private_key[0]
+        self.rsa_keypair = generate_rsa_keys(debug=True)
 
-        assert isinstance(public_key[0], int)
-        assert isinstance(public_key[1], int)
-        assert isinstance(private_key[0], int)
-        assert isinstance(private_key[1], int)
+        self.public_key = self.rsa_keypair[0]
+        self.private_key = self.rsa_keypair[1]
+        self.e = self.public_key[1]
+        self.d = self.private_key[1]
+
+        self.p = self.rsa_keypair[2][0]
+        self.q = self.rsa_keypair[2][1]
+        self.phi_n = (self.p - 1) * (self.q - 1)
+
+
+    def test_rsa_keypair_return_format(self):
+        """Testaa funktion returns-arvojen formaattia debug-tilassa"""
+
+        assert len(self.rsa_keypair) == 3
+        assert len(self.public_key) == 2
+        assert len(self.private_key) == 2
+        assert len(self.rsa_keypair[2]) == 2
+
+        assert isinstance(self.public_key[0], int)
+        assert isinstance(self.e, int)
+
+        assert isinstance(self.private_key[0], int)
+        assert isinstance(self.d, int)
+
+        assert isinstance(self.p, int)
+        assert isinstance(self.q, int)
+
+    def test_rsa_keypair_math(self):
+        """Testaa funktion matemaattista oikeellisuutta, kun debug-tilassa"""
+
+        assert self.public_key[0] == self.private_key[0]
+        assert self.p * self.q == self.public_key[0]
+
+        assert self.p != self.q
+        assert self.p.bit_length() == 1024
+        assert self.q.bit_length() == 1024
+
+        assert miller_rabin(self.p, 40) is True
+        assert miller_rabin(self.q, 40) is True
+
+        assert euclidean(self.e, self.phi_n) == 1
+        assert (self.e * self.d) % self.phi_n == 1
+        assert 1 <= self.d < self.phi_n - 1
 
     @patch("src.rsa_salaus.keygen.euclidean")
     def test_keypair_return_format_mocked(self, mock_euclidean):
-        """Yksikkötesti generate_rsa_keypair -funktiolle, jossa euclidean:in
-        paluuarvot mockattu yksikkötestien kattavuuden parantamiseksi"""
+        """Yksikkötesti funktiolle, jossa euclidean:in paluuarvot
+        mockattu yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
 
         mock_euclidean.side_effect = [0] * 12 + [1]
 
@@ -127,7 +162,10 @@ class TestGenerateRsaKeys:
         assert len(rsa_keypair) == 2
         assert len(public_key) == 2
         assert len(private_key) == 2
+
         assert public_key[0] == private_key[0]
+        assert public_key[0].bit_length() == 2048
+        assert private_key[0].bit_length() == 2048
 
         assert isinstance(public_key[0], int)
         assert isinstance(public_key[1], int)
