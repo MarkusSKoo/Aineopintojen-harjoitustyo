@@ -16,7 +16,8 @@ Kansiossa rsa_salaus testit voidaan toistaa komennolla:
 
 Kattavuusraportit saadaan komennoilla:
 
-```coverage run --branch -m pytest src tests; coverage report -m```
+```coverage run --branch -m pytest```
+```coverage report -m```
 
 ## Testisyötteet
 
@@ -84,19 +85,29 @@ Testi test_rsa_keypair_return_format() varmistaa, että funktio palauttaa debug-
 
 Testi test_keypair_return_format_mocked() varmistaa, että funktio palauttaa oikean määrän oikeanlaisia arvoja, kun debug-tila ei ole päällä, eli kuten se tuotantokäytössä olisi. Näistä arvoista puuttuu p ja q, eikä niistä siten voida päätellä funktion matemaattisen toiminnan oikeellisuutta. Nämä on tarkoituskin jättää pois, sillä p:n ja q:n arvoilla salaus pystyttäisiin murtamaan. Tässä testissä keskitytään tarkistamaan paluuarvojen oikeellisuus tuotantokäytössä. Sekä yksityisen, että julkisen avaimen sisältämä n tulee olla sama, pituudeltaan 2048 bittiä. Lisäksi tämän testin mockauksen tarkoituksena on tarkistaa funktion eri haarojen toiminta, sillä for-luupissa kutsuttu euclidean palauttaa lähes varmasti 1 ensimmäisellä alkiolla 11939 ja katkaisee silmukan suorittamisen. Näin silmukka ei koskaan etene seuraavalle kierrokselle, eikä alla olevaan else-haaraan. Else-haaran sisältämä while-silmukka on tarkoitus toimia fallback-metodina for-silmukalle.
 
+### class MessageCryption
+
+Tämän luokan funktiot salaavat ja purkavat viestejä. Luokan toimintaa testataan salaamalla ja purkamalla ensin hyvin yksinkertainen viesti. Seuraavaksi luokan toimintaa rajatapauksissa testataan antamalla funktioille liian suuria viestejä salattavaksi ja purettavaksi. Lopuksi luokan toimintaa testataan salaamalla ja purkamalla roundtrip-tyylillä monimiutkaisempi viesti, jossa on myös erikoismerkkejä.
+
+### performance_test.py
+
+Tämä tiedosto testaa eristetysti salausavaimen luomiseen kuluvaa aikaa. Eristys oli tarpeen, sillä muiden testien suorittaminen yhtäaikaisesti häiritsi suorituskyvyn testaamista. Tällä tavalla suorituskyvystä saadaan luotettavampaa tietoa.
+
 ## Kattavuusraportti
 
 ```
 Name                            Stmts   Miss Branch BrPart  Cover   Missing
 ---------------------------------------------------------------------------
 src/rsa_salaus/__init__.py          0      0      0      0   100%
-src/rsa_salaus/keygen.py           47      0     20      0   100%
+src/rsa_salaus/keygen.py           50      0     22      0   100%
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
+src/rsa_salaus/rsa_crypt.py        20      0      6      0   100%
 tests/__init__.py                   0      0      0      0   100%
-tests/keygen_test.py              102      0      6      0   100%
+tests/keygen_test.py              104      0      8      0   100%
+tests/performance_test.py           9      0      0      0   100%
 tests/prime_utils_test.py         155      0     38      0   100%
+tests/rsa_crypt_test.py            34      0      0      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             375      0    110      0   100%
-(rsa-salaus-py3.12) markuskauhanen@Markus-MacBook-Pro rsa_salaus % 
+TOTAL                             443      0    120      0   100%
 ```
 
