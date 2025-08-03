@@ -143,7 +143,7 @@ class TestGenerateRsaKeys:
         assert (self.e * self.d) % self.phi_n == 1
         assert 1 <= self.d < self.phi_n - 1
 
-    def helper_for_mocking(self, a, b):
+    def helper_for_mocking_euclidean(self, a: int, b: int):
         """Apufunktio mockaamiseen, jotta generate_rsa_keys käyttää
         eucklidean-funktiota, kun mockaamista ei enää tarvita"""
 
@@ -159,7 +159,7 @@ class TestGenerateRsaKeys:
         mockattu yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
 
         self.counter = 0
-        mock_euclidean.side_effect = self.helper_for_mocking
+        mock_euclidean.side_effect = self.helper_for_mocking_euclidean
 
         rsa_keypair = generate_rsa_keys()
         public_key = rsa_keypair[0]
