@@ -1,8 +1,8 @@
 """rsa_crypt_test.py testaa rsa_crypt.py:ssä olevien salaus- ja purkufunktioiden toimintaa"""
 
+import pytest
 from src.rsa_salaus.keygen import generate_rsa_keys
 from rsa_salaus.rsa_crypt import MessageCryption
-import pytest
 
 class TestEncryptDecrypt:
     """Testaa viestin salaamista ja purkamista"""

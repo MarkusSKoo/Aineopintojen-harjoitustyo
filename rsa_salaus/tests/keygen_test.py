@@ -5,7 +5,7 @@ keygen_test.py suorittaa yksikkötestejä keygen.py-tiedostossa oleville funktio
 from unittest.mock import patch
 import pytest
 from src.rsa_salaus.keygen import (
-    generate_1024bit_number,
+    generate_1025bit_number,
     check_primality_sieve,
     generate_prime,
     generate_keypair,
@@ -17,17 +17,17 @@ class TestGenerate1024BitNumber():
     """Testaa generate_1024bit_number() -funktion toimintaa"""
 
     def setup_method(self):
-        self.number = generate_1024bit_number() # pylint: disable=attribute-defined-outside-init
+        self.number = generate_1025bit_number() # pylint: disable=attribute-defined-outside-init
 
     def test_generate_1024bit_number_length(self):
-        assert self.number.bit_length() == 1024
+        assert self.number.bit_length() >= 1024
 
     def test_generate_1024bit_number_oddity(self):
         assert self.number % 2 == 1
 
     def test_generate_1024bit_number_randomness(self):
-        a = generate_1024bit_number()
-        b = generate_1024bit_number()
+        a = generate_1025bit_number()
+        b = generate_1025bit_number()
         assert a != b
 
 class TestCheckPrimalitySieve():
@@ -61,7 +61,7 @@ class TestPrimeGeneration():
 
     def test_generate_prime(self):
         prime = generate_prime()
-        assert prime.bit_length() == 1024
+        assert prime.bit_length() >= 1024
         assert miller_rabin(prime, 40) is True
 
     def test_generate_keypair(self):
@@ -72,8 +72,8 @@ class TestPrimeGeneration():
 
         assert p != q
 
-        assert p.bit_length() == 1024
-        assert q.bit_length() == 1024
+        assert p.bit_length() >= 1024
+        assert q.bit_length() >= 1024
 
         assert miller_rabin(p, 40) is True
         assert miller_rabin(q, 40) is True
@@ -133,8 +133,8 @@ class TestGenerateRsaKeys:
         assert self.p * self.q == self.public_key[0]
 
         assert self.p != self.q
-        assert self.p.bit_length() == 1024
-        assert self.q.bit_length() == 1024
+        assert self.p.bit_length() >= 1024
+        assert self.q.bit_length() >= 1024
 
         assert miller_rabin(self.p, 40) is True
         assert miller_rabin(self.q, 40) is True
@@ -143,23 +143,24 @@ class TestGenerateRsaKeys:
         assert (self.e * self.d) % self.phi_n == 1
         assert 1 <= self.d < self.phi_n - 1
 
-    def helper_for_mocking_euclidean(self, a: int, b: int):
+    def helper_mock_euclidean(self, a: int, b: int):
         """Apufunktio mockaamiseen, jotta generate_rsa_keys käyttää
         eucklidean-funktiota, kun mockaamista ei enää tarvita"""
 
-        self.counter += 1
+        self.euclidean_counter += 1
 
-        if self.counter < 13:
+        if self.euclidean_counter < 13:
             return 0
+
         return euclidean(a, b)
 
     @patch("src.rsa_salaus.keygen.euclidean")
     def test_keypair_return_format_mocked(self, mock_euclidean):
-        """Yksikkötesti funktiolle, jossa euclidean:in paluuarvot
-        mockattu yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
+        """Yksikkötesti funktiolle, jossa kutsuttavien funktioiden paluuarvoja mockattu
+        yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
 
-        self.counter = 0
-        mock_euclidean.side_effect = self.helper_for_mocking_euclidean
+        self.euclidean_counter = 0
+        mock_euclidean.side_effect = self.helper_mock_euclidean
 
         rsa_keypair = generate_rsa_keys()
         public_key = rsa_keypair[0]
@@ -170,8 +171,8 @@ class TestGenerateRsaKeys:
         assert len(private_key) == 2
 
         assert public_key[0] == private_key[0]
-        assert public_key[0].bit_length() == 2048
-        assert private_key[0].bit_length() == 2048
+        assert public_key[0].bit_length() >= 2048
+        assert private_key[0].bit_length() >= 2048
 
         assert isinstance(public_key[0], int)
         assert isinstance(public_key[1], int)

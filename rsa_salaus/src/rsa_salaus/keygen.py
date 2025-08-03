@@ -10,13 +10,13 @@ from rsa_salaus.prime_utils import (
     extended_euclidean
 )
 
-def generate_1024bit_number():
+def generate_1025bit_number():
     """
-    Tuottaa ja palauttaa satunnaisen 1024-bittiä pitkän parittoman luvun.
+    Tuottaa ja palauttaa satunnaisen, vähintään 1024-bittiä pitkän parittoman luvun.
     """
 
-    number = random.getrandbits(1024)
-    number |= (1 << (1024 - 1)) # Asettaa suurimman bitin arvoksi 1
+    number = random.getrandbits(1025)
+    number |= (1 << (1025 - 1)) # Asettaa suurimman bitin arvoksi 1
     number |= 1 # Asettaa pienimmän bitin arvoksi 1 tuottaen parittoman luvun
     return number
 
@@ -49,7 +49,7 @@ def generate_prime():
     """
 
     while True:
-        number = generate_1024bit_number()
+        number = generate_1025bit_number()
         if check_primality_sieve(number):
             if miller_rabin(number, 40):
                 return number
@@ -72,11 +72,8 @@ def generate_rsa_keys(debug=False):
         Tuple[Tuple[int, int], Tuple[int, int]]:
         Julkinen avain, yksityinen avain"""
 
-    while True:
-        p, q = generate_keypair()
-        n = p * q
-        if n.bit_length() >= 2048:
-            break
+    p, q = generate_keypair()
+    n = p * q
     phi_n = (p - 1) * (q - 1)
 
     e_candidates = [11939, 19391, 19937, 37199, 39119, 71993, 91193, 93719, 93911, 99371]
