@@ -11,10 +11,7 @@ class TestPerformance:
     def setup_method(self):
         """Hakee MessageCryption-luokan ja salausavaimen myöhempiä testejä varten."""
 
-        self.keypair = generate_rsa_keys()
-        self.public_key = self.keypair[0]
-        self.private_key = self.keypair[1]
-
+        self.public_key, self.private_key = generate_rsa_keys()
         self.crypt = MessageCryption()
 
     @pytest.mark.performance
@@ -25,7 +22,7 @@ class TestPerformance:
         generate_rsa_keys()
         time_end = time.time()
 
-        assert time_end - time_start <= 4
+        assert time_end - time_start <= 3
 
     @pytest.mark.performance
     def test_performance_message_roundtrip(self):
