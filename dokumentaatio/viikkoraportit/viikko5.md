@@ -1,1 +1,1 @@
-
+Eräs viime viikolla vastaan tullut ongelma oli saada salausavaimista 2048 bitin pituisia, kun kahden 1024 bitin pituisen alkuluvun tulo saattoi jäädä 2047 bittiin. Kurssimateriaalia tarkemmin katsottuani ohje tosiaan oli, että avaimen tulee olla vähintään 2048 bittiä (ei tarkalleen), joten ratkaisin ongelman lopulta tekemällä alkuluvuista 1025 bittisiä, jolloin tulo täyttää varmasti minimivaatimuksen.
