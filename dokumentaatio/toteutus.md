@@ -22,7 +22,7 @@ Toistaiseksi ohjelmaan on luotu vain yksi suorituskykytesti. generate_rsa_keys()
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
 
-Tällä hetkellä ohjelmalla ei ole vielä rajapintaa käyttäjän kanssa lainkaan, mutta kaikki vaadittavat funktiot ja algoritmit viestien salaamista ja purkamista varten ovat valmiina. Lisäksi tällä hetkellä keygen.py:ssä oleva generate_rsa_keys() sisältää while-silmukan sen varmistamiseksi, että salausavain täyttää minimipituusvaatimuksen. Silmukka ei välttämättä mene uudelle kierrokselle, sillä kahden 1024-bittisen luvun tulo saattaa jäädä 2047 bitin pituiseksi, mutta ei aina. Testikattavuuden varmistamiseksi tätä tulisi mockata, mutta tämä on vielä työn alla.
+Tällä hetkellä ohjelmalla ei ole vielä rajapintaa käyttäjän kanssa lainkaan, mutta kaikki vaadittavat funktiot ja algoritmit viestien salaamista ja purkamista varten ovat valmiina.
 
 Yksikkötestit ovat mielestäni jo varsin kattavia, mutta suorituskykytestejä ja muita testaustapoja (kuten päästä päähän) on vielä tarkoitus luoda lisää.
 
@@ -46,3 +46,4 @@ Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien al
 - [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 - [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 - [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
+
