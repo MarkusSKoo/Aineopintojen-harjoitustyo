@@ -45,7 +45,7 @@ def check_primality_sieve(n: int):
 
 def generate_prime():
     """
-    Luo 1024-bittisen luvun, joka on todennäköisesti alkuluku
+    Luo 1024-bittisen tai suuremman luvun, joka on todennäköisesti alkuluku.
     """
 
     while True:

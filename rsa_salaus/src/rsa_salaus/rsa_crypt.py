@@ -40,7 +40,7 @@ class MessageCryption:
             private_key[Tuple[int, int]]: Yksityinen avain, jossa n ja d kokonaislukuina.
             
         Returns:
-            Tuple[str, int]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
+            Tuple[str, str]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
             merkkijonona ja purettu viesti merkkijonona"""
 
         n, d = private_key

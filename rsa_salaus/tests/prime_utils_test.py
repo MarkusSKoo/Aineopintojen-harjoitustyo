@@ -47,6 +47,8 @@ class TestMillerRabin():
     """Yksikkötestit miller_rabin -funktiolle"""
 
     def setup_method(self):
+        """Hakee CSV-tiedostosta suuret alkuluvut testausta varten"""
+
         self.verified_primes = [] # pylint: disable=attribute-defined-outside-init
 
         with open('tests/primes.csv', newline='', encoding='utf-8') as file:
@@ -196,6 +198,19 @@ class TestEuclidean():
     def test_euclidean_a_negative_b_positive(self):
         assert euclidean(-48, 18) == 6
 
+    def test_euclidean_big_primes(self):
+        verified_primes = []
+
+        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
+            data = csv.reader(file)
+            next(data)
+
+            for row in data:
+                verified_primes.append(int(row[1], 16))
+
+        assert euclidean(verified_primes[0], verified_primes[1]) == 1
+        assert euclidean(verified_primes[1], verified_primes[1]) == verified_primes[1]
+
 class TestExtendedEuclidean():
     """Yksikkötestit extended_euclidean -funktiolle"""
 
@@ -242,3 +257,21 @@ class TestExtendedEuclidean():
     def test_extended_euclidean_both_zero(self):
         with pytest.raises(ValueError, match="Both values cannot be 0"):
             extended_euclidean(0, 0)
+
+    def test_extended_euclidean_verified_primes(self):
+        verified_primes = []
+
+        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
+            data = csv.reader(file)
+            next(data)
+
+            for row in data:
+                verified_primes.append(int(row[1], 16))
+
+        a = verified_primes[0]
+        b = verified_primes[1]
+
+        x, y = extended_euclidean(a, b)
+        gcd = euclidean(a, b)
+
+        assert(a * x + b * y) == gcd

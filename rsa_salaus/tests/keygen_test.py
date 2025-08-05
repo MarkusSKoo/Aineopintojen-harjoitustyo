@@ -14,7 +14,7 @@ from src.rsa_salaus.keygen import (
 from src.rsa_salaus.prime_utils import miller_rabin, euclidean
 
 class TestGenerate1024BitNumber():
-    """Testaa generate_1024bit_number() -funktion toimintaa"""
+    """Testaa generate_1025bit_number() -funktion toimintaa"""
 
     def setup_method(self):
         self.number = generate_1025bit_number() # pylint: disable=attribute-defined-outside-init
@@ -55,6 +55,9 @@ class TestCheckPrimalitySieve():
         for ts in too_small:
             with pytest.raises(ValueError, match="n must be greater than 4500"):
                 check_primality_sieve(ts)
+
+    def test_check_primality_sieve_1025bits(self):
+        assert check_primality_sieve(generate_prime()) is True
 
 class TestPrimeGeneration():
     """Testaa alkulukujen generoimiseen liittyvien funktioiden toimintaa"""
@@ -156,8 +159,8 @@ class TestGenerateRsaKeys:
 
     @patch("src.rsa_salaus.keygen.euclidean")
     def test_keypair_return_format_mocked(self, mock_euclidean):
-        """Yksikkötesti funktiolle, jossa kutsuttavien funktioiden paluuarvoja mockattu
-        yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
+        """Yksikkötesti generate_rsa_keys() -funktiolle, jossa kutsuttavien funktioiden paluuarvoja
+        mockattu yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
 
         self.euclidean_counter = 0
         mock_euclidean.side_effect = self.helper_mock_euclidean
