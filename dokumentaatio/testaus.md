@@ -93,7 +93,7 @@ Tämän luokan funktiot salaavat ja purkavat viestejä. Luokan toimintaa testata
 
 ### performance_test.py
 
-Tämä tiedosto testaa eristetysti salausavaimen luomiseen kuluvaa aikaa. Eristys oli tarpeen, sillä muiden testien suorittaminen yhtäaikaisesti häiritsi suorituskyvyn testaamista. Tällä tavalla suorituskyvystä saadaan luotettavampaa tietoa.
+Tämä tiedosto testaa salausavaimen luomiseen ja viestien salaamiseen kuluvaa aikaa. Eristys oli tarpeen, sillä muiden testien suorittaminen yhtäaikaisesti häiritsi suorituskyvyn testaamista. Tällä tavalla suorituskyvystä saadaan luotettavampaa tietoa.
 
 ## Kattavuusraportti
 
@@ -106,10 +106,10 @@ src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 src/rsa_salaus/rsa_crypt.py        20      0      6      0   100%
 tests/__init__.py                   0      0      0      0   100%
 tests/keygen_test.py              106      0      8      0   100%
-tests/performance_test.py           9      0      0      0   100%
+tests/performance_test.py          57      0      2      0   100%
 tests/prime_utils_test.py         176      0     42      0   100%
 tests/rsa_crypt_test.py            34      0      0      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             463      0    122      0   100%
+TOTAL                             511      0    124      0   100%
 ```
 
