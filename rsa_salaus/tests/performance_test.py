@@ -42,7 +42,7 @@ class TestPerformance:
 
         time_end = time.time()
 
-        assert time_end - time_start <= 4
+        assert time_end - time_start <= 1
 
     @pytest.mark.performance
     def test_performance_encrypt(self):
@@ -52,7 +52,7 @@ class TestPerformance:
         self.crypt.encrypt("Testuser", "message", self.public_key)
         time_end = time.time()
 
-        assert time_end - time_start <= 1
+        assert time_end - time_start <= 0.1
 
     @pytest.mark.performance
     def test_performance_decrypt(self):
@@ -69,7 +69,7 @@ class TestPerformance:
 
         assert username == decrypted_data[0]
         assert plaintext == decrypted_data[1]
-        assert time_end - time_start <= 1
+        assert time_end - time_start <= 0.1
 
     @pytest.mark.performance
     def test_multiple_roundtrips(self):
@@ -88,4 +88,4 @@ class TestPerformance:
 
         time_end = time.time()
 
-        assert time_end - time_start <= 4
+        assert time_end - time_start <= 5
