@@ -1,14 +1,14 @@
-"""rsa_crypt_test.py testaa rsa_crypt.py:ssä olevien salaus- ja purkufunktioiden toimintaa"""
+"""rsa_crypt_test.py testaa rsa_crypt.py:ssä olevien salaus- ja purkufunktioiden toimintaa."""
 
 import pytest
 from src.rsa_salaus.keygen import generate_rsa_keys
 from rsa_salaus.rsa_crypt import MessageCryption
 
 class TestEncryptDecrypt:
-    """Testaa viestin salaamista ja purkamista"""
+    """Testaa viestin salaamista ja purkamista."""
 
     def setup_method(self):
-        """Hakee avainparin tarkistusmetodeja varten"""
+        """Hakee avainparin tarkistusmetodeja varten."""
 
         self.keypair = generate_rsa_keys()
         self.public_key = self.keypair[0]
@@ -18,7 +18,7 @@ class TestEncryptDecrypt:
 
     def test_roundtrip_simple_message(self):
         """Testaa funktioiden toimintaa salaamalla viestin, purkamalla
-        salatun viestin ja vertailemalla näitä keskenään"""
+        salatun viestin ja vertailemalla näitä keskenään."""
 
         username = "Testuser"
         plaintext = "Hello!"
@@ -32,7 +32,7 @@ class TestEncryptDecrypt:
         assert plaintext == decrypted_data[1]
 
     def test_edge_cases(self):
-        """Testaa virheiden käsittelyä"""
+        """Testaa virheiden käsittelyä."""
 
         long_message = "This message is too long" * 20
         long_crypted_message = self.private_key[0] + 1
@@ -48,7 +48,7 @@ class TestEncryptDecrypt:
 
     def test_roundtrip_long_message(self):
         """Testaa funktioiden toimintaa salaamalla viestin, purkamalla
-        salatun viestin ja vertailemalla näitä keskenään"""
+        salatun viestin ja vertailemalla näitä keskenään."""
 
         username = "Testuser"
         plaintext = 'This message is longer and contains special charachters, such as "!#€%&/()=?+_-1234567890'

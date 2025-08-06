@@ -44,7 +44,7 @@ def miller_rabin(n: int, k: int):
         
     Returns:
         True, jos luku on todennäköisesti alkuluku.
-        False, jos luku ei varmasti ole alkuluku"""
+        False, jos luku ei varmasti ole alkuluku."""
 
     if k <= 0:
         raise ValueError("k must be greater than 0")

@@ -18,6 +18,8 @@ class TestPerformance:
     def test_performance_key_generation(self):
         """Testaa suorituskykyä salausavaimen tuottamisessa."""
 
+        generate_rsa_keys() # Esisuoritus, ladataan kirjastot yms.
+
         time_start = time.time()
         generate_rsa_keys()
         time_end = time.time()
@@ -46,7 +48,7 @@ class TestPerformance:
 
     @pytest.mark.performance
     def test_performance_encrypt(self):
-        """Testaa suorituskykyä viestin salaamisessa"""
+        """Testaa suorituskykyä viestin salaamisessa."""
 
         time_start = time.time()
         self.crypt.encrypt("Testuser", "message", self.public_key)

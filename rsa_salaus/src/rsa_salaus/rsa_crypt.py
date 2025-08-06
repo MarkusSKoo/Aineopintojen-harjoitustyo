@@ -1,7 +1,7 @@
-"""rsa_crypt salaa ja purkaa viestit"""
+"""rsa_crypt salaa ja purkaa viestit."""
 
 class MessageCryption:
-    """Luokassa on salaus- ja purkufunktiot viesteille"""
+    """Luokassa on salaus- ja purkufunktiot viesteille."""
 
     def encrypt(self, username: str, message: str, public_key: tuple):
         """Funktio salaa viestin.
@@ -13,7 +13,7 @@ class MessageCryption:
         
         Returns:
             Tuple[str, int]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
-            merkkijonona ja RSA-salattu viesti kokonaislukuna"""
+            merkkijonona ja RSA-salattu viesti kokonaislukuna."""
 
         if message == "":
             raise ValueError("Message cannot be empty")
@@ -41,7 +41,7 @@ class MessageCryption:
             
         Returns:
             Tuple[str, str]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
-            merkkijonona ja purettu viesti merkkijonona"""
+            merkkijonona ja purettu viesti merkkijonona."""
 
         n, d = private_key
 
