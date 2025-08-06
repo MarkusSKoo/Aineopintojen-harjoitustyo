@@ -106,10 +106,10 @@ src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 src/rsa_salaus/rsa_crypt.py        20      0      6      0   100%
 tests/__init__.py                   0      0      0      0   100%
 tests/keygen_test.py              106      0      8      0   100%
-tests/performance_test.py          57      0      2      0   100%
+tests/performance_test.py          55      0      2      0   100%
 tests/prime_utils_test.py         176      0     42      0   100%
 tests/rsa_crypt_test.py            34      0      0      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             511      0    124      0   100%
+TOTAL                             509      0    124      0   100%
 ```
 
