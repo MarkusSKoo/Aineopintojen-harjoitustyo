@@ -4,27 +4,30 @@
 
 Ohjelma toteuttaa 2048-bittisen RSA-salauksen, joka myös tuottaa mainitun pituisia salausavaimia. Käyttäjä voi antaa salattavaksi sen pituisen tekstin kuin avaimen pituus sallii.
 
-Ohjelman toiminnallisuus on jaoteltu tiedostoittain. prime_utils.py sisältää keskeiset funktiot alkulukujen tuottamiseen ja suurimman yhteisen tekijän löytämiseen kahdelle kokonaisluvulle. keygen.py käyttää näitä funktioita alkulukujen tuottamiseen, avainparien tuottamiseen alkuluvuista ja lopuksi RSA-avainparien tuottamiseen, jonka aikana alkulukuja ei enää tallenneta testikäyttöä lukuunottamatta. rsa_crypt.py käsittelee viestien salaamisen ja purkamisen kutsumalla keygen.py:ssä olevaa generate_rsa_keys() -funktiota.
+Ohjelman toiminnallisuus on jaoteltu tiedostoittainseuraavasti:
+
+prime_utils.py sisältää keskeiset funktiot alkulukujen tuottamiseen ja suurimman yhteisen tekijän löytämiseen kahdelle kokonaisluvulle.
+
+keygen.py käyttää näitä funktioita alkulukujen tuottamiseen, avainparien tuottamiseen alkuluvuista ja lopuksi RSA-avainparien tuottamiseen, jonka paluuarvoina alkulukuja ei enää palauteta testikäyttöä lukuunottamatta. Ensimmäinen funktio tuottaa satunnaisen parittoman 1024 bittisen (tai suuremman) luvun. Seuraavaksi tarkistetaan onko luku jaollinen millään pienellä alkuluvulla. Tämä säästää huomattavasti aikaa mahdollisten alkulukujen suodattamisessa, sillä seuraavaksi suoritettava Miller-Rabin on jo raskaampi algoritmi. Miller-Rabinin testin läpäistyään meillä on todennäköinen oikeankokoinen alkuluku. Avainparin tuottava funktio tuottaa kaksi alkulukua p ja q, ja varmistaa, että ne ovat eri lukuja. Lopuksi tuotetaan varsinainen RSA-avain generate_rsa_keys() -funktiolla, jossa N = p * q. Julkinen avain muodostuu luvuista N ja e, jossa 1 < e < (p - 1) * (q - 1) ja suurin yhteinen tekijä gcd(e, (p - 1) * (q - 1)) == 1. Yksityinen avain muodostuu luvuista N ja d, jossa d toteuttaa (d * e) % ((p - 1) * (q - 1)) == 1. Funktio palauttaa siis tuplen julkinen avain (N, e), yksityinen avain (N, d).
+
+rsa_crypt.py käsittelee viestien salaamisen ja purkamisen kutsumalla keygen.py:ssä olevaa generate_rsa_keys() -funktiota tuottaen salauksessa käytettävän avaimen. Funktio encrypt ottaa parametreina käyttäjänimen, salattavan viestin ja julkisen avaimen. Funktio palauttaa tuplena käyttäjänimen ja salatun viestin. Funktio decrypt ottaa parametreina käyttäjänimen, salatun viestin ja yksityisen avaimen ja palauttaa tuplena käyttäjänimen ja puretun viestin.
 
 ## Saavutetut aika- ja tilavaativuudet
 
-Algoritmien aikavaativuudet ovat:
-
-- Miller-Rapid: O(k n^3)
-- Eukleideen algoritmi: O(log b)
-- Sieve of Eratosthenes: O(n log log n)
-
-En ole vielä tehnyt tarkkoja analyyseja, mutta uskoisin päässeeni aikavaatimuksiin kiitettävästi. Päivitän tämän myöhemmin.
+- Miller-Rabin: Aikavaativuus O(k log^3 N) jossa k = kierrosten määrä ja N testattava luku. Tilavaatimus O(log N)
+- Eukleideen algoritmi: Aikavaativuus O(log min(a, b)), tilavaativuus O(1)
+- Laajennettu Eucleideen algoritmi: Aikavaativuus O(log min(a, b)), tilavaativuus O(1)
+- Sieve of Eratosthenes: Aikavaativuus O(n log log n), tilavaatimus O(n)
+- Encryption: Aikavaativuus O(log e), tilavaativuus O(1)
+- Decryption: Aikavaativuus O(log d), Tilavaativuus O(1)
 
 ## Suorituskyky- ja O-analyysivertailu
 
-Toistaiseksi ohjelmaan on luotu vain yksi suorituskykytesti. generate_rsa_keys() -funktio suoriutuu tehtävästä alle 4 sekunnissa. Lisää suorituskykytestejä tulossa myöhemmin.
+Suorituskykytesteissä salausavaimen luonnille on asetettu aikarajaksi 3 sekuntia, mikä vastaa Eucleideen ja Miller-Rabinin vaativuutta. Viestin salaamisen ja purkamisen yhdistelmään eli ns. roundtrip aikavaatimukseksi on asetettu 1 sekunti. Viestin salaamiseen yksinään, kuten myös viestin purkamiseen yksinään on asetettu 0.1 sekunnin raja kummallekin, tämä toteutuu modulaarisen exponenttiin korottamisen ansiosta (pow-metodi). Lopuksi 100 viestin peräkkäiselle roundtrip-testille on asetettu 5 sekunnin raja, joka demonstroi algoritmien skaalautuvuutta odotetusti.
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
 
 Tällä hetkellä ohjelmalla ei ole vielä rajapintaa käyttäjän kanssa lainkaan, mutta kaikki vaadittavat funktiot ja algoritmit viestien salaamista ja purkamista varten ovat valmiina.
-
-Yksikkötestit ovat mielestäni jo varsin kattavia, mutta suorituskykytestejä ja muita testaustapoja (kuten päästä päähän) on vielä tarkoitus luoda lisää.
 
 ## Laajojen kielimallien käyttö
 
@@ -46,4 +49,5 @@ Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien al
 - [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 - [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 - [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
+
 
