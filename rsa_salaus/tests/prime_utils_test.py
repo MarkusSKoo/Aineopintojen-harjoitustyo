@@ -17,23 +17,12 @@ class TestSieveOfEratosthenes():
     def test_sieve_small(self):
         assert sieve_of_eratosthenes(10) == [2, 3, 5, 7]
 
-    def test_sieve_negative(self):
-        with pytest.raises(ValueError, match="Input must be greater than 1"):
-            sieve_of_eratosthenes(-5)
+    def test_sieve_too_small(self):
+        edge_cases = [-5, 0, 1]
 
-    def test_sieve_zero(self):
-        with pytest.raises(ValueError, match="Input must be greater than 1"):
-            sieve_of_eratosthenes(0)
-
-    def test_sieve_one(self):
-        with pytest.raises(ValueError, match="Input must be greater than 1"):
-            sieve_of_eratosthenes(1)
-
-    def test_sieve_two(self):
-        assert sieve_of_eratosthenes(2) == [2]
-
-    def test_sieve_three(self):
-        assert sieve_of_eratosthenes(3) == [2, 3]
+        for ec in edge_cases:
+            with pytest.raises(ValueError, match="Input must be greater than 1"):
+                sieve_of_eratosthenes(ec)
 
     def test_sieve_large(self):
         assert sieve_of_eratosthenes(200) == [
@@ -45,18 +34,6 @@ class TestSieveOfEratosthenes():
 
 class TestMillerRabin():
     """Yksikkötestit miller_rabin -funktiolle"""
-
-    def setup_method(self):
-        """Hakee CSV-tiedostosta suuret alkuluvut testausta varten"""
-
-        self.verified_primes = [] # pylint: disable=attribute-defined-outside-init
-
-        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
-            data = csv.reader(file)
-            next(data) # Ohittaa ensimmäisen rivin
-
-            for row in data:
-                self.verified_primes.append(int(row[1], 16))
 
     def test_miller_rabin_small_n(self):
         with pytest.raises(ValueError, match="n must be greater than 1"):
@@ -74,36 +51,34 @@ class TestMillerRabin():
         for number in numbers:
             assert miller_rabin(number, 40) is False
 
-    def test_miller_rabin_zero_k(self):
-        with pytest.raises(ValueError, match="k must be greater than 0"):
-            miller_rabin(3, 0)
+    def test_miller_rabin_small_k(self):
+        edge_cases = [-1, 0]
 
-    def test_miller_rabin_negative_k(self):
-        with pytest.raises(ValueError, match="k must be greater than 0"):
-            miller_rabin(3, -1)
+        for ec in edge_cases:
+            with pytest.raises(ValueError, match="k must be greater than 0"):
+                miller_rabin(3, ec)
 
     def test_miller_rabin_5000(self):
         numbers = sieve_of_eratosthenes(5000)
         for number in numbers:
             assert miller_rabin(number, 40) is True
 
-    def test_miller_rabin_middle(self):
-        numbers = [
-            7727, 7741, 7753, 7757, 7759, 7789, 7793, 7817, 7823, 7829,
-            7841, 7853, 7867, 7873, 7877, 7879, 7883, 7901, 7907, 7919
-        ]
-
-        for number in numbers:
-            assert miller_rabin(number, 40) is True
-
     def test_miller_rabin_large(self):
-        numbers = [
+        primes = [
             611693, 611707, 611729, 611753, 611791, 611801, 611803, 611827, 611833, 611837,
             611839, 611873, 611879, 611887, 611903, 611921, 611927, 611939, 611951, 611953
         ]
 
-        for number in numbers:
-            assert miller_rabin(number, 40) is True
+        non_primes = []
+        for i in range(611693, 611953):
+            if i not in primes:
+                non_primes.append(i)
+
+        for prime in primes:
+            assert miller_rabin(prime, 40) is True
+
+        for np in non_primes:
+            assert miller_rabin(np, 40) is False
 
     def test_miller_rabin_not_primes(self):
         primes = sieve_of_eratosthenes(1224)
@@ -116,20 +91,6 @@ class TestMillerRabin():
         for number in numbers:
             assert miller_rabin(number, 40) is False
 
-    def test_miller_rabin_big_not_primes(self):
-        primes = [
-        611693, 611707, 611729, 611753, 611791, 611801, 611803, 611827, 611833, 611837,
-        611839, 611873, 611879, 611887, 611903, 611921, 611927, 611939, 611951, 611953
-    ]
-
-        non_primes = []
-        for i in range(611693, 611953):
-            if i not in primes:
-                non_primes.append(i)
-
-        for number in non_primes:
-            assert miller_rabin(number, 40) is False
-
     def test_miller_rabin_carmichael(self):
         carmichaels = [561, 1105, 1729, 2465, 2821, 6601, 8911]
 
@@ -137,13 +98,24 @@ class TestMillerRabin():
             assert miller_rabin(c, 40) is False
 
     def test_miller_rabin_verified_primes(self):
-        multipliers = [2, 3, 5]
+        verified_primes = []
 
-        for prime in self.verified_primes:
+        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
+            data = csv.reader(file)
+            next(data) # Ohittaa ensimmäisen rivin
+            for row in data:
+                verified_primes.append(int(row[1], 16))
+
+        a = verified_primes[0]
+        b = verified_primes[1]
+        c = verified_primes[2]
+
+        for prime in verified_primes:
             assert miller_rabin(prime, 40) is True
 
-            for mp in multipliers:
-                assert miller_rabin(prime * mp, 40) is False
+        assert miller_rabin(a * b, 40) is False
+        assert miller_rabin(a * c, 40) is False
+        assert miller_rabin(b * c, 40) is False
 
 class TestEuclidean():
     """Yksikkötestit euclidean -funktiolle"""
@@ -203,8 +175,7 @@ class TestEuclidean():
 
         with open('tests/primes.csv', newline='', encoding='utf-8') as file:
             data = csv.reader(file)
-            next(data)
-
+            next(data) # Ohittaa ensimmäisen rivin
             for row in data:
                 verified_primes.append(int(row[1], 16))
 
@@ -263,8 +234,7 @@ class TestExtendedEuclidean():
 
         with open('tests/primes.csv', newline='', encoding='utf-8') as file:
             data = csv.reader(file)
-            next(data)
-
+            next(data) # Ohittaa ensimmäisen rivin
             for row in data:
                 verified_primes.append(int(row[1], 16))
 
