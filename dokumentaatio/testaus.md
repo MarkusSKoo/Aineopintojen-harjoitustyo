@@ -23,7 +23,7 @@ Kattavuusraportit saadaan komennoilla:
 
 ### sieve_of_eratosthenes
 
-Erathosteneen seula antaa listan alkuluvuista n asti, kun n on 2 tai suurempi. Ensimmäinen testi kokeilee antaako algoritmi oikean tuloksen, kun n on hyvin pieni ja tiedetään varmuudella haluttu paluuarvo. Kolme seuraavaa testiä testaa, että funktio nostaa ValueError, kun syöte on pienempi kuin 2, mutta positiivinen, syöte on 0 ja syöte on negatiivinen. Testisyötteiden 2 ja 3 tarkoitus on tarkistaa palauttaako funktio oikeat alkuluvut pienimmillä mahdollisilla syötteillä, joita testi hyväksyy. Testisyöte 200 tarkoitus on tarkistaa tuottaako funktio listan alkuluvuista oikein suuremmalla n arvolla. Lista alkuluvuista on tarkistettu sivulta:
+Erathosteneen seula antaa listan alkuluvuista n asti, kun n on 2 tai suurempi. Ensimmäinen testi kokeilee antaako algoritmi oikean tuloksen, kun n on hyvin pieni ja tiedetään varmuudella haluttu paluuarvo. Seuraava testiä testaa, että funktio nostaa ValueError, kun syöte on pienempi kuin 2, mutta positiivinen, syöte on 0 ja syöte on negatiivinen. Testisyöte 200 tarkoitus on tarkistaa tuottaako funktio listan alkuluvuista oikein suuremmalla n arvolla. Lista alkuluvuista on tarkistettu sivulta:
 
 [Wikipedia - List of prime numbers](https://en.wikipedia.org/wiki/List_of_prime_numbers)
 
@@ -31,19 +31,17 @@ Erathosteneen seula antaa listan alkuluvuista n asti, kun n on 2 tai suurempi. E
 
 Miller-Rabin -algoritmi palauttaa boolean-arvon False jos luku n > 1 ei varmuudella ole alkuluku tai boolean-arvon True, jos luku on todennäköisesti alkuluku. Varmuutta lisää eksponentiaalisesti testikierrosten k kasvattaminen, ja testeissä onkin valittu k arvoksi 40 algoritmin oiken toiminnan varmistamiseksi, paitsi testitapauksissa k = 0 ja k = -1, jolloin nostetaan ValueError, sillä testin suorittamiseksi tarvitaan vähintään yksi kierros.
 
-Testisyöte n = 1, k = 40 tarkoitus on testata, että algoritmi nostaa oikeanlaisen virheilmoituksen, kun n on liian pieni. Testisyöte n = 2, k = 40 tarkoitus on testata, että palautetaan True, kun luku on 2, eikä vahingossa palauteta False luvun parillisuudesta johtuen. Tätä suuremmat parilliset n arvot hylätään automaattisesti, sillä ne eivät varmuudella ole alkulukuja. Parillisia lukuja testataan testillä test_miller_rabin_even_n(), joka kerää listan parillisia lukuja ja testaa algoritmia kaikilla listan luvuilla.
+Testisyöte n = 1, k = 40 tarkoitus on testata, että algoritmi nostaa oikeanlaisen virheilmoituksen, kun n on liian pieni. Testisyöte n = 2, k = 40 tarkoitus on testata, että palautetaan True, kun luku on 2, eikä vahingossa palauteta False luvun parillisuudesta johtuen. Tätä suuremmat parilliset n arvot hylätään automaattisesti, sillä ne eivät varmuudella ole alkulukuja. Parillisia lukuja testataan testillä test_miller_rabin_even_n(), joka kerää listan parillisia lukuja ja testaa algoritmia kaikilla listan luvuilla. Lisäksi algoritmia testataan k-rajatapauksilla.
 
-test_miller_rabin_5000() testaa varmistaako miller_rabin luvut alkuluvuiksi aiemmin mainitun sieve_of_eratosthenes() -funktion tuottaman listan perusteella, kun tuotetaan kaikki alkuluvut 5000 asti. Tällä saadaan varmuutta molempien algoritmien oikeanlaiseen toimintaan. On kuitenkin ainakin teoriassa mahdollista, että molemmat funktiot toimisivat väärin, ja paluuarvoina olisi väärä True, siksi testit test_miller_rabin_middle() ja test_miller_rabin_large() testaavat funktiota kovakoodatuilla alkuluvuilla, jotka on kopioitu aiemmin mainitulta Wikipedia-sivulta sekä täältä:
+test_miller_rabin_5000() testaa varmistaako miller_rabin luvut alkuluvuiksi aiemmin mainitun sieve_of_eratosthenes() -funktion tuottaman listan perusteella, kun tuotetaan kaikki alkuluvut 5000 asti. Tällä saadaan varmuutta molempien algoritmien oikeanlaiseen toimintaan. On kuitenkin ainakin teoriassa mahdollista, että molemmat funktiot toimisivat väärin, ja paluuarvoina olisi väärä True, siksi testi test_miller_rabin_large() testaa funktiota kovakoodatuilla alkuluvuilla, jotka on kopioitu aiemmin mainitulta Wikipedia-sivulta sekä täältä:
 
 [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
-
-Testi test_miller_rabin_not_primes() testaa, palauttaako funktio ei-alkuluvuista False, kun tuotetaan lista luvuista, joista poistetaan alkuluvut sieve_of_eratosthenes avulla. Edellä mainitusta syystä test_miller_rabin_big_not_primes() testaa listaa ei-alkuluvuista, joista on kovakoodaamalla poistettu raja-arvojen sisältä kaikki tiedetyt alkuluvut.
 
 Carmichaelsin luvut ovat lukuja, jotka vaikuttavat alkuluvuilta ja tietyissä testeissä käyttäytyvät, kuten alkuluvut, mutta eivät ole alkulukuja. Testi test_miller_rabin_carmichael() testaa algoritmin toimintaa 7 ensimmäisellä carmichaelin luvulla, lähde:
 
 [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 
-Lopuksi test_miller_rabin_2048_primes() testaa algoritmin toimivuutta muutamalla erittäin suurella verifioidulla alkuluvulla, joiden koko ylittää reilusti salauksessa tarvittavien alkulukujen koon. Tällä haetaan lisävarmuutta siihen, että algoritmia voidaan käyttää suunniteltua ohjelmaa varten. Samojen lukujen tuloja testataan myös, jotta voidaan varmistaa algoritmin hylkäävän suuret komposiittiluvut. Luvut on kopioitu täältä:
+Lopuksi test_miller_rabin_verified_primes() testaa algoritmin toimivuutta muutamalla erittäin suurella verifioidulla alkuluvulla, joiden koko ylittää reilusti salauksessa tarvittavien alkulukujen koon. Tällä haetaan lisävarmuutta siihen, että algoritmia voidaan käyttää suunniteltua ohjelmaa varten. Samojen lukujen tuloja testataan myös, jotta voidaan varmistaa algoritmin hylkäävän suuret komposiittiluvut. Luvut on kopioitu täältä:
 
 [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
 
@@ -106,10 +104,10 @@ src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 src/rsa_salaus/rsa_crypt.py        20      0      6      0   100%
 tests/__init__.py                   0      0      0      0   100%
 tests/keygen_test.py              106      0      8      0   100%
-tests/performance_test.py          55      0      2      0   100%
-tests/prime_utils_test.py         176      0     42      0   100%
+tests/performance_test.py          56      0      2      0   100%
+tests/prime_utils_test.py         155      0     36      0   100%
 tests/rsa_crypt_test.py            34      0      0      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             509      0    124      0   100%
+TOTAL                             489      0    118      0   100%
 ```
 
