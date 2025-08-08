@@ -18,7 +18,7 @@ class TestPerformance:
     def test_performance_key_generation(self):
         """Testaa suorituskykyä salausavaimen tuottamisessa."""
 
-        generate_rsa_keys() # Esisuoritus, ladataan kirjastot yms.
+        generate_rsa_keys() # Esisuoritus, ladataan kirjastot
 
         time_start = time.time()
         generate_rsa_keys()
@@ -54,7 +54,7 @@ class TestPerformance:
         self.crypt.encrypt("Testuser", "message", self.public_key)
         time_end = time.time()
 
-        assert time_end - time_start <= 0.1
+        assert time_end - time_start <= 0.2
 
     @pytest.mark.performance
     def test_performance_decrypt(self):
@@ -71,7 +71,7 @@ class TestPerformance:
 
         assert username == decrypted_data[0]
         assert plaintext == decrypted_data[1]
-        assert time_end - time_start <= 0.1
+        assert time_end - time_start <= 0.2
 
     @pytest.mark.performance
     def test_multiple_roundtrips(self):

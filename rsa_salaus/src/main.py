@@ -8,7 +8,6 @@ class UserInterface:
 
     def __init__(self):
         self.rsa_cryptor = MessageCryption()
-        self.n_min_size = 2048
 
     def rsa_key(self):
         """Luo käyttäjälle RSA-salausavainparin ja tulostaa sen osat ohjeineen."""
@@ -43,8 +42,10 @@ class UserInterface:
             public_n = int(input("Julkisen avaimen 1. osa (N): "))
             print()
 
-            if public_n.bit_length() < self.n_min_size:
-                print("Liian lyhyt julkinen avain (N)!\n")
+            message_length = int.from_bytes(message.encode('utf-8'), 'big')
+
+            if message_length.bit_length() > public_n.bit_length():
+                print("Viesti voi olla korkeintaan avaimen (N) pituinen!\n")
                 return
 
             public_e = int(input("Julkisen avaimen 2. osa (e): "))
@@ -78,8 +79,8 @@ class UserInterface:
             private_n = int(input("Yksityisen avaimen 1. osa (N): "))
             print()
 
-            if private_n.bit_length() < self.n_min_size:
-                print("Virhe syötteessä: N on liian lyhyt.\n")
+            if message.bit_length() > private_n.bit_length():
+                print("Viestin koko ylittää mkasimipituuden!\n")
                 return
 
             private_d = int(input("Yksityisen avaimen 2. osa (d): "))

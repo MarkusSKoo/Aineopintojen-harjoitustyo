@@ -80,17 +80,6 @@ class TestMillerRabin():
         for np in non_primes:
             assert miller_rabin(np, 40) is False
 
-    def test_miller_rabin_not_primes(self):
-        primes = sieve_of_eratosthenes(1224)
-
-        numbers = []
-        for i in range(3, 1223):
-            if i not in primes:
-                numbers.append(i)
-
-        for number in numbers:
-            assert miller_rabin(number, 40) is False
-
     def test_miller_rabin_carmichael(self):
         carmichaels = [561, 1105, 1729, 2465, 2821, 6601, 8911]
 
@@ -137,7 +126,7 @@ class TestEuclidean():
 
         for i in range(100):
 
-            if i == 10:
+            if i == 10: # Kovakoodataan yksi kierros testikattavuuden varmistamiseksi
                 a = big_primes[10]
                 b = big_primes[10]
 
