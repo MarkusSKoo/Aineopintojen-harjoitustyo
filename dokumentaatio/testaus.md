@@ -6,7 +6,7 @@ Harjoitustyössä käytettävien testien tavoite on varmistaa, että algoritmit 
 
 ## Yksikkötestaus
 
-Testattavat tiedostot: prime_utils.py, keygen.py
+Testattavat tiedostot: prime_utils.py, keygen.py, rsa_crypt.py. Suorituskykyä testataan testikansiossa performance_test.py
 
 Testaustapa: Pytest.
 
