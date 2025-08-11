@@ -11,7 +11,7 @@ from src.rsa_salaus.prime_utils import (
     extended_euclidean
 )
 
-# Avataan CSV-tiedosto myöhempää käyttöä varten
+# Avaa CSV-tiedoston myöhempää käyttöä varten
 csv_primes = []
 with open('tests/primes.csv', newline='', encoding='utf-8') as file:
     data = csv.reader(file)

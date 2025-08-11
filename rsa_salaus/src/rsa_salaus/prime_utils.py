@@ -1,6 +1,6 @@
 """
-pirme_utils sisältää tarpeellisia funktioita alkulukujen etsimiseen ja
-käsittelyyn sekä apufunktioita salauksen toteuttamista varten.
+pirme_utils.py sisältää tarpeellisia funktioita alkulukujen etsimiseen,
+sekä apufunktioita salauksen toteuttamista varten.
 """
 
 import random
@@ -10,6 +10,9 @@ def sieve_of_eratosthenes(n: int):
 
     Args:
         n (int): Yläraja etsittäville alkuluvuille.
+    
+    Raises:
+        ValueError: Jos n <= 1.
 
     Returns:
         list[int]: Löydetyt alkuluvut listaformaatissa"""
@@ -36,15 +39,18 @@ def sieve_of_eratosthenes(n: int):
     return primes
 
 def miller_rabin(n: int, k: int):
-    """Testaa onko luku 2 tai sitä suurempi pariton luku todennäköisesti alkuluku.
+    """Testaa Miller-Rabin-algoritmilla onko luku todennäköisesti alkuluku.
     
     Args:
-        n (int): Testattava pariton luku, kun n > 2.
+        n (int): Testattava luku, kun n >= 2.
         k (int): Haluttu testikierrosten määrä.
+    
+    Raises:
+        ValueError: Jos k <= 0 tai n < 2.
         
     Returns:
-        True, jos luku on todennäköisesti alkuluku.
-        False, jos luku ei varmasti ole alkuluku."""
+        bool:   True, jos luku on todennäköisesti alkuluku.
+                False, jos luku ei varmasti ole alkuluku."""
 
     if k <= 0:
         raise ValueError("k must be greater than 0")
@@ -85,14 +91,19 @@ def euclidean(a: int, b: int):
     Args:
         a (int): Testattava kokonaisluku.
         b (int): Testattava kokonaisluku.
-        
+
+    Raises:
+        ValueError: Jos a ja b ovat molemmat 0.
+
     Returns:
         int: Palauttaa kokonaisluvun, joka on suurin yhteinen tekijä."""
 
     if a == b == 0:
         raise ValueError("Both values cannot be 0")
+
     if a == 0:
         return abs(b)
+
     if b == 0:
         return abs(a)
 
@@ -109,6 +120,9 @@ def extended_euclidean(a: int, b:int):
     Args:
         a (int): Laskennassa käytettävä kokonaisluku.
         b (int): Laskennassa käytettävä kokonaisluku.
+
+    Raises:
+        ValueError: Jos a ja b ovat molemmat 0.
 
     Returns:
         Tuple[x: int, y: int]: Bezoutin kertoimet tuplena.
