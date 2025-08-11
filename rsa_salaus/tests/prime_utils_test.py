@@ -11,6 +11,14 @@ from src.rsa_salaus.prime_utils import (
     extended_euclidean
 )
 
+# Avataan CSV-tiedosto myöhempää käyttöä varten
+csv_primes = []
+with open('tests/primes.csv', newline='', encoding='utf-8') as file:
+    data = csv.reader(file)
+    next(data) # Ohittaa ensimmäisen rivin
+    for row in data:
+        csv_primes.append(int(row[1], 16))
+
 class TestSieveOfEratosthenes():
     """yksikkötestit sieve_of_eratosthenes -funktiolle"""
 
@@ -87,19 +95,11 @@ class TestMillerRabin():
             assert miller_rabin(c, 40) is False
 
     def test_miller_rabin_verified_primes(self):
-        verified_primes = []
+        a = csv_primes[0]
+        b = csv_primes[1]
+        c = csv_primes[2]
 
-        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
-            data = csv.reader(file)
-            next(data) # Ohittaa ensimmäisen rivin
-            for row in data:
-                verified_primes.append(int(row[1], 16))
-
-        a = verified_primes[0]
-        b = verified_primes[1]
-        c = verified_primes[2]
-
-        for prime in verified_primes:
+        for prime in csv_primes:
             assert miller_rabin(prime, 40) is True
 
         assert miller_rabin(a * b, 40) is False
@@ -160,16 +160,8 @@ class TestEuclidean():
         assert euclidean(-48, 18) == 6
 
     def test_euclidean_big_primes(self):
-        verified_primes = []
-
-        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
-            data = csv.reader(file)
-            next(data) # Ohittaa ensimmäisen rivin
-            for row in data:
-                verified_primes.append(int(row[1], 16))
-
-        assert euclidean(verified_primes[0], verified_primes[1]) == 1
-        assert euclidean(verified_primes[1], verified_primes[1]) == verified_primes[1]
+        assert euclidean(csv_primes[0], csv_primes[1]) == 1
+        assert euclidean(csv_primes[1], csv_primes[1]) == csv_primes[1]
 
 class TestExtendedEuclidean():
     """Yksikkötestit extended_euclidean -funktiolle"""
@@ -219,16 +211,8 @@ class TestExtendedEuclidean():
             extended_euclidean(0, 0)
 
     def test_extended_euclidean_verified_primes(self):
-        verified_primes = []
-
-        with open('tests/primes.csv', newline='', encoding='utf-8') as file:
-            data = csv.reader(file)
-            next(data) # Ohittaa ensimmäisen rivin
-            for row in data:
-                verified_primes.append(int(row[1], 16))
-
-        a = verified_primes[0]
-        b = verified_primes[1]
+        a = csv_primes[0]
+        b = csv_primes[1]
 
         x, y = extended_euclidean(a, b)
         gcd = euclidean(a, b)
