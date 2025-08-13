@@ -10,7 +10,7 @@
 
 Ohjelman toteutus vaatii useita algoritmejä, joista alkuselvitysten perusteella tulen käsittelemään ainakin seuraavia:
 
-- Miller-Rapid-testi sen määrittelemiseksi, onko luku todennäköisesti alkuluku: O(k n^3)
+- Miller-Rapin-testi sen määrittelemiseksi, onko luku todennäköisesti alkuluku: O(k n^3)
 - Eukleideen algoritmi kahden luvun suurimman yhteisen tekijän löytämiseen: O(log b)
 - Laajennettu Eukleideen algoritmi
 - Sieve of Eratosthenes, algoritmilla määritellän alkuluvut valittuun numeroon asti: O(n log log n)
@@ -32,4 +32,5 @@ Salattava viesti salataan julkista avainta käyttäen ja puretaan yksityisellä 
 - [Sieve of Eratosthenes - Wikipedia](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
 - [Euclidean algorithm - Wikipedia](https://en.wikipedia.org/wiki/Euclidean_algorithm)
 - [Extended Euclidean algorithm - Wikipedia](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)
+
 
