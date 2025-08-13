@@ -13,8 +13,9 @@ from src.rsa_salaus.keygen import (
 )
 from src.rsa_salaus.prime_utils import miller_rabin, euclidean
 
-class TestGenerate1024BitNumber():
-    """Testaa generate_1025bit_number() -funktion toimintaa"""
+class TestGenerate1025BitNumber():
+    """Testaa generate_1025bit_number()-funktion palauttaman luvun
+    satunnaisuutta, parittomuutta ja pituutta."""
 
     def setup_method(self):
         self.number = generate_1025bit_number() # pylint: disable=attribute-defined-outside-init
@@ -31,7 +32,7 @@ class TestGenerate1024BitNumber():
         assert a != b
 
 class TestCheckPrimalitySieve():
-    """Testaa check_primarility_sieve() -funktion toimintaa"""
+    """Testaa check_primality_sieve() -funktion toimintaa."""
 
     def test_check_primality_sieve_large_primes(self):
         large_primes = [
@@ -50,7 +51,7 @@ class TestCheckPrimalitySieve():
             assert check_primality_sieve(bnp) is False
 
     def test_check_primality_sieve_too_small(self):
-        too_small = [-5, 0, 247]
+        too_small = [-5, 0, 247, 4500]
 
         for ts in too_small:
             with pytest.raises(ValueError, match="n must be greater than 4500"):
@@ -60,7 +61,7 @@ class TestCheckPrimalitySieve():
         assert check_primality_sieve(generate_prime()) is True
 
 class TestPrimeGeneration():
-    """Testaa alkulukujen generoimiseen liittyvien funktioiden toimintaa"""
+    """Testaa alkulukujen generoimiseen liittyvien funktioiden toimintaa."""
 
     def test_generate_prime(self):
         prime = generate_prime()
@@ -83,10 +84,11 @@ class TestPrimeGeneration():
 
     @patch("src.rsa_salaus.keygen.generate_prime")
     def test_generate_keypair_mocked(self, mock):
-        """Testaa generate_keypair() -funktion toimintaa identtisillä paluuarvoilla"""
+        """Testaa generate_keypair() -funktion toimintaa identtisillä paluuarvoilla."""
 
         mock.side_effect = [13, 13, 19, 5]
-        # Testaamista varten valitsee ensimmäiselle kierrokselle identtisen arvon
+        # Testaamista varten valitsee ensimmäiselle kierrokselle identtiset arvot,
+        # jotta while-silmukka toistetaan
         keypair = generate_keypair()
 
         p = keypair[0]
@@ -96,10 +98,10 @@ class TestPrimeGeneration():
 
 # pylint: disable=too-many-instance-attributes, attribute-defined-outside-init
 class TestGenerateRsaKeys:
-    """Testaa generate_rsa_keys() -funktion toimintaa"""
+    """Testaa generate_rsa_keys() -funktion toimintaa."""
 
     def setup_method(self):
-        """Asettaa testattavat paluuarvot debug-tilassa tehtäviä testejä varten"""
+        """Asettaa testattavat paluuarvot debug=True-tilassa tehtäviä testejä varten."""
 
         self.rsa_keypair = generate_rsa_keys(debug=True)
 
@@ -113,7 +115,7 @@ class TestGenerateRsaKeys:
         self.phi_n = (self.p - 1) * (self.q - 1)
 
     def test_rsa_keypair_return_format(self):
-        """Testaa funktion returns-arvojen formaattia debug-tilassa"""
+        """Testaa funktion returns-arvojen formaattia, kun debug=True."""
 
         assert len(self.rsa_keypair) == 3
         assert len(self.public_key) == 2
@@ -130,7 +132,7 @@ class TestGenerateRsaKeys:
         assert isinstance(self.q, int)
 
     def test_rsa_keypair_math(self):
-        """Testaa funktion matemaattista oikeellisuutta, kun debug-tilassa"""
+        """Testaa funktion matemaattista oikeellisuutta, kun debug=True."""
 
         assert self.public_key[0] == self.private_key[0]
         assert self.p * self.q == self.public_key[0]
@@ -147,8 +149,8 @@ class TestGenerateRsaKeys:
         assert 1 <= self.d < self.phi_n - 1
 
     def helper_mock_euclidean(self, a: int, b: int):
-        """Apufunktio mockaamiseen, jotta generate_rsa_keys käyttää
-        eucklidean-funktiota, kun mockaamista ei enää tarvita"""
+        """Apufunktio mockaamiseen, jotta testattaessa generate_rsa_keys menee
+        else-haaraan ja käyttää sen jälkeen euclidean-funktiota."""
 
         self.euclidean_counter += 1
 
@@ -160,7 +162,7 @@ class TestGenerateRsaKeys:
     @patch("src.rsa_salaus.keygen.euclidean")
     def test_keypair_return_format_mocked(self, mock_euclidean):
         """Yksikkötesti generate_rsa_keys() -funktiolle, jossa kutsuttavien funktioiden paluuarvoja
-        mockattu yksikkötestien kattavuuden parantamiseksi debug-tilan ollessa pois päältä"""
+        mockattu yksikkötestien kattavuuden parantamiseksi, kun debug=False."""
 
         self.euclidean_counter = 0
         mock_euclidean.side_effect = self.helper_mock_euclidean

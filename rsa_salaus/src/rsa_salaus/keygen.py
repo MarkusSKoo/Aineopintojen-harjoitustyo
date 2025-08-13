@@ -13,6 +13,9 @@ from rsa_salaus.prime_utils import (
 def generate_1025bit_number():
     """
     Tuottaa ja palauttaa satunnaisen, vähintään 1024-bittiä pitkän parittoman luvun.
+
+    Returns:
+        int: vähintään 1024-bittiä pitkä pariton kokonaisluku.
     """
 
     number = random.getrandbits(1025)
@@ -22,17 +25,20 @@ def generate_1025bit_number():
 
 def check_primality_sieve(n: int):
     """
-    Testaa onko luku pieni alkuluku tai jaollinen jollain pienistä alkuluvuista.
+    Testaa onko luku jaollinen jollain pienistä alkuluvuista.
 
     Args:
         n (int): Testattava luku.
+    
+    Raises:
+        ValueError: Jos n < 4500.
 
     Returns:
-        True, jos luku ei ole jaollinen pienillä alkuluvuilla.
-        False, jos luku ei ole alkuluku.
+        bool:   True, jos luku ei ole jaollinen pienellä alkuluvuilla.
+                False, jos luku on jaollinen pienellä alkuluvulla.
     """
 
-    if n < 4500:
+    if n <= 4500:
         raise ValueError("n must be greater than 4500")
 
     small_primes = sieve_of_eratosthenes(4500)
@@ -45,7 +51,10 @@ def check_primality_sieve(n: int):
 
 def generate_prime():
     """
-    Luo 1024-bittisen tai suuremman luvun, joka on todennäköisesti alkuluku.
+    Luo vähintään 1024-bittisen luvun, joka on todennäköisesti alkuluku.
+
+    Returns:
+        int: kokonaisluku, joka on todennäköisesti alkuluku ja vähintään 1024-bittiä pitkä.
     """
 
     while True:
@@ -57,6 +66,9 @@ def generate_prime():
 def generate_keypair():
     """
     Luo kaksi erisuuruista lukua, jotka ovat todennäköisesti alkulukuja.
+
+    Returns:
+        Tuple[int, int]: kaksi eriarvoista, vähintään 1024-bittistä todennäköistä alkulukua.
     """
 
     while True:
@@ -66,11 +78,11 @@ def generate_keypair():
             return p, q
 
 def generate_rsa_keys(debug=False):
-    """Luo julkisen ja yksityisen avaimen.
+    """Luo RSA-salauksessa käytettävät julkisen ja yksityisen avaimen.
     
     Returns:
-        Tuple[Tuple[int, int], Tuple[int, int]]:
-        Julkinen avain, yksityinen avain"""
+        Tuple[Tuple[int, int], Tuple[int, int]]: Julkinen avain (N, e), yksityinen avain (N, d).
+        debug=True-tilassa palauttaa myös tuple[int, int]: käytetyt alkuluvut (p, q)."""
 
     p, q = generate_keypair()
     n = p * q

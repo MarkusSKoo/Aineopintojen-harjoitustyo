@@ -19,15 +19,38 @@ class UserInterface:
         private_n = keypair[1][0]
         private_d = keypair[1][1]
 
-        print("VAROITUS: Älä jaa yksityistä avainta turvallisuussyistä!")
-        print("Voit jakaa julkisen avaimen.\n")
-
         print(f"Kopioi ja tallenna RSA-avain. Julkisen avaimen 1. osa (N) on:\n{public_n}\n")
         print(f"Julkisen avaimen 2. osa (e) on:\n{public_e}\n")
 
-        print("Suojaa yksityinen avaimesi huolellisesti. Voit kopioida sen täältä:\n")
-        print(f"Yksityisen avaimen 1. osa (N) on: \n{private_n}\n")
+        print("VAROITUS: Älä jaa yksityistä avainta. Voit kopioida yksityisen avaimen täältä:\n")
+        print(f"Yksityisen avaimen 1. osa (N) on:\n{private_n}\n")
         print(f"Yksityisen avaimen 2. osa (d) on: \n{private_d}\n")
+
+    def validate_input_str(self, strinput):
+        """Apufunktio merkkijonojen validointiin"""
+
+        string = input(strinput)
+
+        if not isinstance(string, str) or len(string) == 0:
+            print("Syöte ei voi olla tyhjä!\n")
+            return None
+        print()
+        return string
+
+    def validate_input_int(self, intinput):
+        """Apufunktio kokonaislukujen validointiin"""
+
+        try:
+            number = int(input(intinput))
+            if isinstance(number, int) and number > 0:
+                print()
+                return number
+            print("Syötteen täytyy olla positiivinen kokonaisluku!\n")
+            return None
+
+        except ValueError:
+            print("Syötteen töytyy olla positiivinen kokonaisluku!\n")
+            return None
 
     def encrypt_message(self):
         """Salaa käyttäjän syöttämän viestin julkisella avaimella
@@ -35,28 +58,25 @@ class UserInterface:
 
         print("Olet salaamassa viestiä. Anna käyttäjänimi, viesti ja julkinen avain.\n")
 
-        username = input("Käyttäjänimi: ")
-        message = input("Salattava viesti: ")
+        username = self.validate_input_str("Käyttäjänimi: ")
+        if not username:
+            return
 
-        try:
-            public_n = int(input("Julkisen avaimen 1. osa (N): "))
-            print()
+        message = self.validate_input_str("Salattava viesti: ")
+        if not message:
+            return
 
-            message_length = int.from_bytes(message.encode('utf-8'), 'big')
+        public_n = self.validate_input_int("Julkisen avaimen 1. osa (N): ")
+        if not public_n:
+            return
 
-            if message_length.bit_length() > public_n.bit_length():
-                print("Viesti voi olla korkeintaan avaimen (N) pituinen!\n")
-                return
+        message_length = int.from_bytes(message.encode('utf-8'), 'big')
+        if message_length.bit_length() > public_n.bit_length():
+            print("Viesti voi olla korkeintaan avaimen (N) pituinen!\n")
+            return
 
-            public_e = int(input("Julkisen avaimen 2. osa (e): "))
-            print()
-
-            if public_e <= 0 or public_n <= 0:
-                print("Virhe syötteessä! Avaimen (N ja e) tulee olla positiivisia lukuja.\n")
-                return
-
-        except ValueError:
-            print("Virhe syötteessä! avaimen (N ja e) täytyy olla positiivisia kokonaislukuja.\n")
+        public_e = self.validate_input_int("Julkisen avaimen 2. osa (e): ")
+        if not public_e:
             return
 
         public_key = public_n, public_e
@@ -71,30 +91,29 @@ class UserInterface:
 
         print("Olet purkamassa salattua viestiä. Anna käyttäjänimi, viesti ja yksityinen avain:\n")
 
-        username = input("Käyttäjänimi: ")
+        username = self.validate_input_str("Käyttäjänimi: ")
+        if not username:
+            return
 
-        try:
-            message = int(input("Purettava viesti: "))
-            print()
-            private_n = int(input("Yksityisen avaimen 1. osa (N): "))
-            print()
+        message = self.validate_input_int("Purettava viesti: ")
+        if not message:
+            return
 
-            if message.bit_length() > private_n.bit_length():
-                print("Viestin koko ylittää mkasimipituuden!\n")
-                return
+        private_n = self.validate_input_int("Yksityisen avaimen 1. osa (N): ")
+        if not private_n:
+            return
 
-            private_d = int(input("Yksityisen avaimen 2. osa (d): "))
-            print()
+        if message.bit_length() > private_n.bit_length():
+            print("Viestin koko ylittää avaimen salliman maksimipituuden!\n")
+            return
 
-        except ValueError:
-            print("Virhe syötteissä! Avaimen (N ja d) ja salatun viestin tulee olla lukuja.\n")
+        private_d = self.validate_input_int("Yksityisen avaimen 2. osa (d): ")
+        if not private_d:
             return
 
         private_key = private_n, private_d
-
         try:
             decrypted_message = self.rsa_cryptor.decrypt(username, message, private_key)
-
         except UnicodeDecodeError:
             print("Purkaminen epäonnistui! Tarkista että viesti ja avain ovat oikein.\n")
             return

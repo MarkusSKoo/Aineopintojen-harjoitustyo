@@ -8,10 +8,13 @@ from src.rsa_salaus.rsa_crypt import MessageCryption
 class TestPerformance:
     """Suorituskykyä testaava luokka"""
 
+    # pylint: disable=attribute-defined-outside-init
     def setup_method(self):
         """Hakee MessageCryption-luokan ja salausavaimen myöhempiä testejä varten."""
 
-        self.public_key, self.private_key = generate_rsa_keys()
+        keys = generate_rsa_keys()
+        self.public_key = keys[0]
+        self.private_key = keys[1]
         self.crypt = MessageCryption()
 
     @pytest.mark.performance
@@ -33,7 +36,8 @@ class TestPerformance:
         time_start = time.time()
 
         username = "Testuser"
-        plaintext = 'This message is longer and contains special charachters, such as "!#€%&/()=?+_-1234567890'
+        plaintext = 'This message is longer and contains special charachters,' \
+        'such as "!#€%&/()=?+_-1234567890'
 
         encrypted_data = self.crypt.encrypt(username, plaintext, self.public_key)
         assert username == encrypted_data[0]
@@ -78,7 +82,8 @@ class TestPerformance:
         """Testaa perättäisten roundtrip-pyyntöjen suorituskykyä."""
 
         username = "Testuser"
-        plaintext = 'This message is longer and contains special charachters, such as "!#€%&/()=?+_-1234567890'
+        plaintext = 'This message is longer and contains special charachters,' \
+        'such as "!#€%&/()=?+_-1234567890'
 
         time_start = time.time()
 

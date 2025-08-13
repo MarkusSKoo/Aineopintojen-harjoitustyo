@@ -2,11 +2,12 @@
 
 import pytest
 from src.rsa_salaus.keygen import generate_rsa_keys
-from rsa_salaus.rsa_crypt import MessageCryption
+from src.rsa_salaus.rsa_crypt import MessageCryption
 
 class TestEncryptDecrypt:
     """Testaa viestin salaamista ja purkamista."""
 
+    # pylint: disable=attribute-defined-outside-init
     def setup_method(self):
         """Hakee avainparin tarkistusmetodeja varten."""
 
@@ -51,7 +52,8 @@ class TestEncryptDecrypt:
         salatun viestin ja vertailemalla näitä keskenään."""
 
         username = "Testuser"
-        plaintext = 'This message is longer and contains special charachters, such as "!#€%&/()=?+_-1234567890'
+        plaintext = 'This message is longer and contains special charachters,' \
+        'such as "!#€%&/()=?+_-1234567890'
 
         encrypted_data = self.crypt.encrypt(username, plaintext, self.public_key)
         assert username == encrypted_data[0]

@@ -4,15 +4,18 @@ class MessageCryption:
     """Luokassa on salaus- ja purkufunktiot viesteille."""
 
     def encrypt(self, username: str, message: str, public_key: tuple):
-        """Funktio salaa viestin.
+        """Funktio salaa viestin julkisella avaimella.
         
         Args:
             username(str): Käyttäjänimi merkkijonona.
             message(str): Salattava viesti merkkijonona.
             public_key[Tuple[int, int]]: Julkinen avain, jossa n ja e kokonaislukuina.
         
+        Raises:
+            ValueError: Jos viesti on tyhjä tai suurempi, kuin salausavain sallii.
+        
         Returns:
-            Tuple[str, int]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
+            tuple[str, int]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
             merkkijonona ja RSA-salattu viesti kokonaislukuna."""
 
         if message == "":
@@ -20,9 +23,10 @@ class MessageCryption:
 
         n, e = public_key
 
-        message_bytes = message.encode('utf-8') # Jakaa viestin tavuihin
-        message_int = int.from_bytes(message_bytes, byteorder='big')
+        # Muuntaa viestin tavuihin, jotta se voidaan muuntaa numeeriseen muotoon
+        message_bytes = message.encode('utf-8')
         # Muuntaa tavut kokonaisluvuiksi (big endian järjestys)
+        message_int = int.from_bytes(message_bytes, byteorder='big')
 
         if message_int >= n:
             raise ValueError("Too long message")
@@ -32,12 +36,15 @@ class MessageCryption:
         return username, crypted_message
 
     def decrypt(self, username: str, message: int, private_key: tuple):
-        """Funktio purkaa salatun viestin luettavaan muotoon.
+        """Funktio purkaa yksityisellä avaimella salatun viestin luettavaan muotoon.
         
         Args:
             username(str): Käyttäjänimi merkkijonona.
             message(int): Purettava viesti kokonaislukuna.
-            private_key[Tuple[int, int]]: Yksityinen avain, jossa n ja d kokonaislukuina.
+            private_key: Tuple[int, int]: Yksityinen avain, jossa n ja d kokonaislukuina.
+
+        Raises:
+            ValueError: Jos viesti on liian suuri salausavaimelle purettavaksi.
             
         Returns:
             Tuple[str, str]: Palauttaa tuplen, jonka alkioina ovat käyttäjänimi
