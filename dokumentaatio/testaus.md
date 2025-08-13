@@ -6,7 +6,7 @@ Harjoitustyössä käytettävien testien tavoite on varmistaa, että algoritmit 
 
 ## Yksikkötestaus
 
-Testattavat tiedostot: prime_utils.py, keygen.py, rsa_crypt.py. Suorituskykyä testataan testikansiossa performance_test.py
+Testattavat tiedostot: prime_utils.py, keygen.py, rsa_crypt.py. Suorituskykyä testataan testitiedostolla performance_test.py
 
 Testaustapa: Pytest.
 
@@ -23,17 +23,17 @@ Kattavuusraportit saadaan komennoilla:
 
 ### sieve_of_eratosthenes
 
-Erathosteneen seula antaa listan alkuluvuista n asti, kun n on 2 tai suurempi. Ensimmäinen testi kokeilee antaako algoritmi oikean tuloksen, kun n on hyvin pieni ja tiedetään varmuudella haluttu paluuarvo. Seuraava testiä testaa, että funktio nostaa ValueError, kun syöte on pienempi kuin 2, mutta positiivinen, syöte on 0 ja syöte on negatiivinen. Testisyöte 200 tarkoitus on tarkistaa tuottaako funktio listan alkuluvuista oikein suuremmalla n arvolla. Lista alkuluvuista on tarkistettu sivulta:
+Erathosteneen seula antaa listan alkuluvuista n asti, kun n on 2 tai suurempi. Ensimmäinen testi kokeilee antaako algoritmi oikean tuloksen, kun n on hyvin pieni ja tiedetään varmuudella haluttu paluuarvo. Seuraava testiä testaa, että funktio nostaa ValueError liian pienillä syötteillä. Testisyöte 200 tarkoitus on tarkistaa tuottaako funktio listan alkuluvuista oikein suuremmalla n arvolla. Lista alkuluvuista on tarkistettu sivulta:
 
 [Wikipedia - List of prime numbers](https://en.wikipedia.org/wiki/List_of_prime_numbers)
 
 ### miller_rabin
 
-Miller-Rabin -algoritmi palauttaa boolean-arvon False jos luku n > 1 ei varmuudella ole alkuluku tai boolean-arvon True, jos luku on todennäköisesti alkuluku. Varmuutta lisää eksponentiaalisesti testikierrosten k kasvattaminen, ja testeissä onkin valittu k arvoksi 40 algoritmin oiken toiminnan varmistamiseksi, paitsi testitapauksissa k = 0 ja k = -1, jolloin nostetaan ValueError, sillä testin suorittamiseksi tarvitaan vähintään yksi kierros.
+Miller-Rabin -algoritmi palauttaa boolean-arvon False jos luku n > 1 ei varmuudella ole alkuluku tai boolean-arvon True, jos luku on todennäköisesti alkuluku. Varmuutta lisää eksponentiaalisesti testikierrosten k kasvattaminen, ja testeissä onkin valittu k arvoksi 40 algoritmin oiken toiminnan varmistamiseksi, paitsi rajatapauksissa, jolloin nostetaan ValueError.
 
 Testisyöte n = 1, k = 40 tarkoitus on testata, että algoritmi nostaa oikeanlaisen virheilmoituksen, kun n on liian pieni. Testisyöte n = 2, k = 40 tarkoitus on testata, että palautetaan True, kun luku on 2, eikä vahingossa palauteta False luvun parillisuudesta johtuen. Tätä suuremmat parilliset n arvot hylätään automaattisesti, sillä ne eivät varmuudella ole alkulukuja. Parillisia lukuja testataan testillä test_miller_rabin_even_n(), joka kerää listan parillisia lukuja ja testaa algoritmia kaikilla listan luvuilla. Lisäksi algoritmia testataan k-rajatapauksilla.
 
-test_miller_rabin_5000() testaa varmistaako miller_rabin luvut alkuluvuiksi aiemmin mainitun sieve_of_eratosthenes() -funktion tuottaman listan perusteella, kun tuotetaan kaikki alkuluvut 5000 asti. Tällä saadaan varmuutta molempien algoritmien oikeanlaiseen toimintaan. On kuitenkin ainakin teoriassa mahdollista, että molemmat funktiot toimisivat väärin, ja paluuarvoina olisi väärä True, siksi testi test_miller_rabin_large() testaa funktiota kovakoodatuilla alkuluvuilla, jotka on kopioitu aiemmin mainitulta Wikipedia-sivulta sekä täältä:
+test_miller_rabin_5000() testaa varmistaako miller_rabin luvut alkuluvuiksi aiemmin mainitun sieve_of_eratosthenes() -funktion tuottaman listan perusteella, kun tuotetaan kaikki alkuluvut 5000 asti. Tällä saadaan varmuutta molempien algoritmien oikeanlaiseen toimintaan. On kuitenkin ainakin teoriassa mahdollista, että molemmat funktiot toimisivat väärin, ja paluuarvoina olisi valheellinen True, siksi testi test_miller_rabin_large() testaa funktiota kovakoodatuilla alkuluvuilla, jotka on kopioitu täältä:
 
 [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 
@@ -41,7 +41,7 @@ Carmichaelsin luvut ovat lukuja, jotka vaikuttavat alkuluvuilta ja tietyissä te
 
 [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 
-Lopuksi test_miller_rabin_verified_primes() testaa algoritmin toimivuutta muutamalla erittäin suurella verifioidulla alkuluvulla, joiden koko ylittää reilusti salauksessa tarvittavien alkulukujen koon. Tällä haetaan lisävarmuutta siihen, että algoritmia voidaan käyttää suunniteltua ohjelmaa varten. Samojen lukujen tuloja testataan myös, jotta voidaan varmistaa algoritmin hylkäävän suuret komposiittiluvut. Luvut on kopioitu täältä:
+Lopuksi test_miller_rabin_verified_primes() testaa algoritmin toimivuutta muutamalla erittäin suurella verifioidulla alkuluvulla. Tällä haetaan lisävarmuutta siihen, että algoritmi toimii ohjelmassa käytettävän kokoisilla syötteillä. Samojen lukujen tuloja testataan myös, jotta voidaan varmistaa algoritmin hylkäävän suuret komposiittiluvut. Luvut on kopioitu täältä:
 
 [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
 
@@ -51,9 +51,9 @@ Algoritmi etsii kahdelle luvulle suurimman yhteisen tekijän. Neljä ensimmäist
 
 Testi test_euclidean_large_coprime() testaa For-silmukassa 100 kertaa sieve_of_eratosthenes:illa tuotetuilla, satunnaisesti valituilla alkuluvuilla palauttaako algoritmi tuloksen 1 tai molempien syötteenä olevien lukujen ollessa samat, ko. luvun. For-silmukkaan on kovakoodattu yhdelle kierrokselle valinnaksi sama luku testikattavuutta varten, sillä random.choice ei käytännössä koskaan valitsisi samaa lukua, jolloin ensimmäisen if-haaran toimivuutta ei koskaan testattaisi.
 
-Euclidean toimintaa testataan vielä erikseen samoilla syötteillä, sekä yksinkertaisilla rajatapauksilla, kuten toisen arvon ollessa 0 (tulisi palauttaa toisen luvun itseisarvo), molempien arvojen ollessa 0 (nostaa ValueError) ja negativisilla arvoilla.
+Euclidean toimintaa testataan vielä erikseen identtisillä syötteillä, sekä yksinkertaisilla rajatapauksilla.
 
-Lopuksi funktiota testataan suurilla alkuluvuilla, joiden suurin yhteinen tekijä tulisi tietenkin olla 1 lukujen ollessa erisuuruisia, ja lukujen ollessa samoja, luku itse.
+Lopuksi funktiota testataan suurilla alkuluvuilla, joiden suurin yhteinen tekijä tulisi tietenkin olla 1, paitsi lukujen ollessa identtisiä.
 
 ### extended_euclidean
 
