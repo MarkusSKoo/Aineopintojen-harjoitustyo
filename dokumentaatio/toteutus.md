@@ -27,7 +27,7 @@ Suorituskykytesteissä salausavaimen luonnille on asetettu aikarajaksi 3 sekunti
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
 
-Tällä hetkellä ohjelmalla ei ole vielä rajapintaa käyttäjän kanssa lainkaan, mutta kaikki vaadittavat funktiot ja algoritmit viestien salaamista ja purkamista varten ovat valmiina.
+Tällä hetkellä rajapinta käyttäjälle main.py tiedosto sisältää kaksi apufunktiota syötteiden validointia varten. Kyseisten funktioiden koodi ei ole kaikista esteettisintä, mutta ne toimivat odotetusti, tekevät muista funktioista siistimpiä ja ratkaisevat Pylintin antaman varoituksen too manby instances. En ole halunnut ohjelmoida näitä apufunktioita enää uudestaan, koska ne toimivat testattaessa odotetusti, mutta koodia pystyisi varmasti siistimään luettavampaan muotoon.
 
 ## Laajojen kielimallien käyttö
 
@@ -49,6 +49,7 @@ Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien al
 - [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 - [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 - [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
+
 
 
 
