@@ -23,7 +23,7 @@ rsa_crypt.py käsittelee viestien salaamisen ja purkamisen kutsumalla keygen.py:
 
 ## Suorituskyky- ja O-analyysivertailu
 
-Suorituskykytesteissä salausavaimen luonnille on asetettu aikarajaksi 3 sekuntia, mikä vastaa Eucleideen ja Miller-Rabinin vaativuutta. Viestin salaamisen ja purkamisen yhdistelmään eli ns. roundtrip aikavaatimukseksi on asetettu 1 sekunti. Viestin salaamiseen yksinään, kuten myös viestin purkamiseen yksinään on asetettu 0.1 sekunnin raja kummallekin, tämä toteutuu modulaarisen exponenttiin korottamisen ansiosta (pow-metodi). Lopuksi 100 viestin peräkkäiselle roundtrip-testille on asetettu 5 sekunnin raja, joka demonstroi algoritmien skaalautuvuutta odotetusti.
+Suorituskykytesteissä salausavaimen luonnille on asetettu aikarajaksi 3 sekuntia, mikä vastaa Eucleideen ja Miller-Rabinin vaativuutta. Viestin salaamisen ja purkamisen yhdistelmään eli ns. roundtrip aikavaatimukseksi on asetettu 1 sekunti. Viestin salaamiseen yksinään, kuten myös viestin purkamiseen yksinään on asetettu 0.2 sekunnin raja kummallekin, tämä toteutuu modulaarisen exponenttiin korottamisen ansiosta (pow-metodi). Lopuksi 100 viestin peräkkäiselle roundtrip-testille on asetettu 5 sekunnin raja, joka demonstroi algoritmien skaalautuvuutta odotetusti.
 
 ## Työn mahdolliset puutteet ja parannusehdotukset
 
@@ -49,5 +49,6 @@ Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien al
 - [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 - [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 - [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
+
 
 
