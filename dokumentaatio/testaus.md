@@ -19,7 +19,7 @@ Kattavuusraportit saadaan komennoilla:
 ```coverage run --branch -m pytest```
 ```coverage report -m```
 
-## Testisyötteet
+## Yksikkötestaus: prime_utils
 
 ### sieve_of_eratosthenes
 
@@ -61,9 +61,11 @@ Algoritmi laskee kokonaisluvuille a ja b Bezoutin kertoimet x ja y siten, että 
 
 ## Yksikkötestaus: keygen
 
+keygen.py muodostaa avainparit kutsuen prime_utils.py:ssä olevia funktioita.
+
 ### generate_1025bit_number
 
-Tämän funktion toimintaa testataan tuottamalla vähintään 1024 bittiä pitkä numero, jonka pituus testataan bit_length() -metodilla. Sen jälkeen tarkistetaan onko luku parillinen. Sitten generoidaan kaksi erillistä lukua ja vertaillaan, etteivät ne ole samat. Näillä testeillä varmistetaan, että funktio tuottaa oikeanpituisia, parittomia ja satunnaisia lukuja.
+Tämän funktion tuottaa vähintään 1024 bittiä pitkä numero, jonka pituus testataan bit_length() -metodilla. Sen jälkeen tarkistetaan onko luku parillinen. Sitten generoidaan kaksi lukua ja vertaillaan, etteivät ne ole samat. Näillä testeillä varmistetaan, että funktio tuottaa oikeanpituisia, parittomia ja satunnaisia lukuja.
 
 ### check_primality_sieve
 
@@ -75,7 +77,7 @@ Funktio tuottaa vähintään 1024 bittiä pitkiä alkulukuja. Sen toimintaa test
 
 ### generate_keypair
 
-Funktio tuottaa avainlukuparin, joista kummatkin ovat vähintään 1024 bittiä pitkiä. Lukujen tulee olla eri lukuja, tämä tarkistetaan vertailuoperaattorilla. Generoinnin nopeutta tarkistetaan time.time() -metodilla, tässä hyväksyttäväksi aikarajaksi on asetettu 4 sekuntia. Molempien lukujen koko tarkastetaan .bit_length() -metodilla, jonka jälkeen luvut annetaan miller_rabinin tarkastettavaksi. Koska generate_keypair() -funktio ei käytännössä koskaan tuota kahta samaa lukua avainparille, testikattavuudesta jää while True-silmukasta ajamatta uusintakierros. Tätä varten on mockattu test_generate_keypair_mocked, jonka tarkoitus on testata while-silmukan oikeanlaista toimintaa.
+Funktio tuottaa avainlukuparin, joista kummatkin ovat vähintään 1024 bittiä pitkiä. Lukujen tulee olla eri lukuja, tämä tarkistetaan vertailuoperaattorilla. Molempien lukujen koko tarkastetaan .bit_length() -metodilla, jonka jälkeen luvut annetaan miller_rabinin tarkastettavaksi. Koska generate_keypair() -funktio ei käytännössä koskaan tuota kahta samaa lukua avainparille, testikattavuudesta jää while True-silmukasta ajamatta uusintakierros. Tätä varten on mockattu test_generate_keypair_mocked, jonka tarkoitus on testata while-silmukan oikeanlaista toimintaa.
 
 ### class TestGenerateRsaKeys
 
@@ -83,15 +85,21 @@ Tämä luokka testaa generate_rsa_keys() -funktion toimintaa. Huomaa, että funk
 
 Testi test_rsa_keypair_return_format() varmistaa, että funktio palauttaa debug-tilassa oikean määrän oikeanlaisia arvoja. Testi test_rsa_keypair_math() varmistaa, että funktion palauttamat arvot ovat matemaattisesti oikein. n tulee olla sama sekä julkisessa, että yksityisessä avaimessa. n tulee olla p:n ja q:n tulo. p ja q tulee olla eri arvot, kummankin koon tulee olla vähintään 1024 bittiä ja niiden tulee olla alkulukuja (varmistetaan Miller-Rabinilla). e:n ja phi_n (eli (p - 1) * (q - 1)) suurin yhteinen tekijä tulee olla 1. d tulee olla väliltä [1, phi_n - 1]
 
-Testi test_keypair_return_format_mocked() varmistaa, että funktio palauttaa oikean määrän oikeanlaisia arvoja, kun debug-tila ei ole päällä, eli kuten se tuotantokäytössä olisi. Näistä arvoista puuttuu p ja q, eikä niistä siten voida päätellä funktion matemaattisen toiminnan oikeellisuutta. Nämä on tarkoituskin jättää pois, sillä p:n ja q:n arvoilla salaus pystyttäisiin murtamaan. Tässä testissä keskitytään tarkistamaan paluuarvojen oikeellisuus tuotantokäytössä. Sekä yksityisen, että julkisen avaimen sisältämä n tulee olla sama, pituudeltaan vähintään 2048 bittiä. Lisäksi tämän testin mockauksen tarkoituksena on tarkistaa funktion eri haarojen toiminta, sillä for-luupissa kutsuttu euclidean palauttaa lähes varmasti 1 ensimmäisellä alkiolla 11939 ja katkaisee silmukan suorittamisen. Näin silmukka ei koskaan etene seuraavalle kierrokselle, eikä alla olevaan else-haaraan. Else-haaran sisältämä while-silmukka on tarkoitus toimia fallback-metodina for-silmukalle.
+Testi test_keypair_return_format_mocked() varmistaa, että funktio palauttaa oikean määrän oikeanlaisia arvoja, kun debug-tila ei ole päällä, eli kuten se tuotantokäytössä olisi. Näistä arvoista puuttuu p ja q, eikä niistä siten voida päätellä funktion matemaattisen toiminnan oikeellisuutta. Nämä on tarkoituskin jättää pois, sillä p:n ja q:n arvoilla salaus pystyttäisiin murtamaan. Tässä testissä keskitytään tarkistamaan paluuarvojen oikeellisuus tuotantokäytössä. Sekä yksityisen, että julkisen avaimen sisältämä n tulee olla sama, pituudeltaan vähintään 2048 bittiä. Lisäksi tämän testin mockauksen tarkoituksena on tarkistaa funktion eri haarojen toiminta, sillä for-luupissa kutsuttu euclidean palauttaa lähes varmasti 1 ensimmäisellä alkiolla (11939) ja katkaisee silmukan suorittamisen. Näin silmukka ei koskaan etene seuraavalle kierrokselle, eikä alla olevaan else-haaraan. Else-haaran sisältämä while-silmukka on tarkoitus toimia fallback-metodina for-silmukalle.
 
-### class MessageCryption
+## rsa_crypt
 
-Tämän luokan funktiot salaavat ja purkavat viestejä. Luokan toimintaa testataan salaamalla ja purkamalla ensin hyvin yksinkertainen viesti. Seuraavaksi luokan toimintaa rajatapauksissa testataan antamalla funktioille liian suuria viestejä salattavaksi ja purettavaksi. Lopuksi luokan toimintaa testataan salaamalla ja purkamalla roundtrip-tyylillä monimiutkaisempi viesti, jossa on myös erikoismerkkejä.
+Tämän tiedoston funktiot salaavat ja purkavat viestejä. Näitä testataan tiedostossa rsa_crypt_test.py. MessageCrypt-luokan toimintaa testataan salaamalla ja purkamalla ensin hyvin yksinkertainen viesti ns. roundtrip-menetelmällä. Seuraavaksi luokan toimintaa rajatapauksissa testataan antamalla funktioille liian suuria viestejä salattavaksi ja purettavaksi. Lopuksi luokan toimintaa testataan salaamalla ja purkamalla roundtrip-tyylillä monimiutkaisempi viesti, jossa on myös erikoismerkkejä.
 
-### performance_test.py
+### Suorituskykytestit
 
-Tämä tiedosto testaa salausavaimen luomiseen ja viestien salaamiseen kuluvaa aikaa. Eristys oli tarpeen, sillä muiden testien suorittaminen yhtäaikaisesti häiritsi suorituskyvyn testaamista. Tällä tavalla suorituskyvystä saadaan luotettavampaa tietoa.
+performance_test.py -tiedosto testaa salausavaimen luomiseen ja viestien salaamiseen kuluvaa aikaa. Eristys oli tarpeen, sillä muiden testien suorittaminen yhtäaikaisesti häiritsi suorituskyvyn testaamista. Tällä tavalla suorituskyvystä saadaan luotettavampaa tietoa. Aikarajat:
+
+Avainparin tuottaminen: 3s
+Viestin purkamisen ja salaamisen yhdistelmä (roundtrip): 1s
+Viestin salaamiinen: 0.2s
+Viestin purkaminen: 0.2s
+Roundtrip toistettuna 100 kertaa: 5s
 
 ## Kattavuusraportti
 
@@ -103,11 +111,11 @@ src/rsa_salaus/keygen.py           47      0     20      0   100%
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
 src/rsa_salaus/rsa_crypt.py        20      0      6      0   100%
 tests/__init__.py                   0      0      0      0   100%
-tests/keygen_test.py              106      0      8      0   100%
-tests/performance_test.py          56      0      2      0   100%
-tests/prime_utils_test.py         155      0     36      0   100%
+tests/keygen_test.py              107      0     10      0   100%
+tests/performance_test.py          58      0      2      0   100%
+tests/prime_utils_test.py         143      0     32      0   100%
 tests/rsa_crypt_test.py            34      0      0      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             489      0    118      0   100%
+TOTAL                             480      0    116      0   100%
 ```
 
