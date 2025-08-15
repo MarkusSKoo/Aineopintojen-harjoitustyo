@@ -64,9 +64,10 @@ class TestPrimeGeneration():
     """Testaa alkulukujen generoimiseen liittyvien funktioiden toimintaa."""
 
     def test_generate_prime(self):
-        prime = generate_prime()
-        assert prime.bit_length() >= 1024
-        assert miller_rabin(prime, 40) is True
+        for _ in range(20):
+            prime = generate_prime()
+            assert prime.bit_length() >= 1024
+            assert miller_rabin(prime, 40) is True
 
     def test_generate_keypair(self):
         keypair = generate_keypair()
