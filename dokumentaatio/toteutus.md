@@ -31,6 +31,8 @@ Tällä hetkellä rajapinta käyttäjälle main.py tiedosto sisältää kaksi ap
 
 Tämän lisäksi ohjelma ei oikein tee mitään hyödyllistä käytäjänimellä, muuta kuin tulostaa sen näytölle muoden syötteiden yhteydessä. Tämä on toki siinä mielesä oleellista, että useita salauksia/purkuja peräkkäin suoritettaessa se helpottaa luettavuutta ja erittelyä. Käyttäjänimi olisi erittäin hyödyllinen datan organisointia varten tallennettaessa viestejä tietokantaan, mutta tällaista ominaisuutta ei tehtävänannossa erikseen vaadittu, enkä lopulta tätä toteuttanut. Tällainen voisi kuitenkin olla hyödyllinen, jos projektia haluaisi käyttää kurssin ulkopuolella osana laajempaa projektia.
 
+Työ on dokumentoitu ja kommentoitu suomeksi. Kuitenkin virheviestien käsitteleminen tuntui luontevammalta englanniksi ja toisaalta käyttöliittymä on taas täysin suomeksi toteutettu. Tätä olisi voinut yhdenmukaistaa ja pitää kaiken ohjelman kommentoinnin ja virheviestien käsittelyn englanniksi. Kurssi on kuitenkin suomenkielinen ja työtä arvoivat muut opiskelijat ja kurssin henkilökunta, joten pitäydyin suomen kielessä, mutta varsinaisessa tuotantotyössä dokumentointi ja koodin kommentointi olisivat todennäköisimmin enlganniksi ja siten yhteneväisempi.
+
 ## Laajojen kielimallien käyttö
 
 Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien algoritmien toiminnan ymmärtämiseen. Olen pyytänyt ChatGPT:tä selittämään asioita ja samalla antanut eksplisiittiset ohjeet, etten halua mitään valmista ratkaisua tai koodia.
@@ -51,6 +53,7 @@ Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien al
 - [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 - [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 - [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
+
 
 
 
