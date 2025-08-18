@@ -29,6 +29,8 @@ Suorituskykytesteissä salausavaimen luonnille on asetettu aikarajaksi 3 sekunti
 
 Tällä hetkellä rajapinta käyttäjälle main.py tiedosto sisältää kaksi apufunktiota syötteiden validointia varten. Kyseisten funktioiden koodi ei ole kaikista esteettisintä, mutta ne toimivat odotetusti, tekevät muista funktioista siistimpiä ja ratkaisevat Pylintin antaman varoituksen too manby instances. En ole halunnut ohjelmoida näitä apufunktioita enää uudestaan, koska ne toimivat testattaessa odotetusti, mutta koodia pystyisi varmasti siistimään luettavampaan muotoon.
 
+Tämän lisäksi ohjelma ei oikein tee mitään hyödyllistä käytäjänimellä, muuta kuin tulostaa sen näytölle muoden syötteiden yhteydessä. Tämä on toki siinä mielesä oleellista, että useita salauksia/purkuja peräkkäin suoritettaessa se helpottaa luettavuutta ja erittelyä. Käyttäjänimi olisi erittäin hyödyllinen datan organisointia varten tallennettaessa viestejä tietokantaan, mutta tällaista ominaisuutta ei tehtävänannossa erikseen vaadittu, enkä lopulta tätä toteuttanut. Tällainen voisi kuitenkin olla hyödyllinen, jos projektia haluaisi käyttää kurssin ulkopuolella osana laajempaa projektia.
+
 ## Laajojen kielimallien käyttö
 
 Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien algoritmien toiminnan ymmärtämiseen. Olen pyytänyt ChatGPT:tä selittämään asioita ja samalla antanut eksplisiittiset ohjeet, etten halua mitään valmista ratkaisua tai koodia.
@@ -49,6 +51,7 @@ Olen käyttänyt työssäni apuna OpenAI GPT-4-mallia työn perustana olevien al
 - [List of 50000 Primes - The University of Arizona](https://www2.cs.arizona.edu/icon/oddsends/primes.htm)
 - [Carmichael number - Wikipedia](https://en.wikipedia.org/wiki/Carmichael_number)
 - [rfc-editor](https://www.rfc-editor.org/rfc/rfc3526#page-3)
+
 
 
 
