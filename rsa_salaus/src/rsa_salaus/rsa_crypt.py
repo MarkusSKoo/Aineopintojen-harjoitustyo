@@ -21,6 +21,8 @@ class MessageCryption:
         if message == "":
             raise ValueError("Message cannot be empty")
 
+        message = "MSG:" + message
+
         n, e = public_key
 
         # Muuntaa viestin tavuihin, jotta se voidaan muuntaa numeeriseen muotoon
@@ -56,8 +58,13 @@ class MessageCryption:
             raise ValueError("Message too long")
 
         message_int = pow(message, d, n)
+
         length = (message_int.bit_length() + 7) // 8 # Lasketaan tallentamiseen tarvittava tavumäärä
         message_bytes = message_int.to_bytes(length, byteorder='big')
-        message_str = message_bytes.decode('utf-8')
+        message_str = message_bytes.decode('utf-8', errors="ignore")
+        if not message_str.startswith("MSG:"):
+            raise ValueError("Decryption failed: invalid message or wrong key")
+
+        message_str = message_str[4:]
 
         return username, message_str

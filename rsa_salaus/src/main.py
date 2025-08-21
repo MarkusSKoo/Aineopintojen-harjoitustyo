@@ -114,7 +114,7 @@ class UserInterface:
         private_key = private_n, private_d
         try:
             decrypted_message = self.rsa_cryptor.decrypt(username, message, private_key)
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, ValueError):
             print("Purkaminen epäonnistui! Tarkista että viesti ja avain ovat oikein.\n")
             return
 
