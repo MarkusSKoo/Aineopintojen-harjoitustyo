@@ -32,6 +32,15 @@ class TestEncryptDecrypt:
         assert username == decrypted_data[0]
         assert plaintext == decrypted_data[1]
 
+    def test_roundtrip_empty_message(self):
+        """Testaa virheellisen viestin purkamisyritystä"""
+
+        username = "Testuser"
+        wrong_message = 123
+
+        with pytest.raises(ValueError, match="Decryption failed: invalid message or wrong key"):
+            self.crypt.decrypt(username, wrong_message, self.private_key)
+
     def test_edge_cases(self):
         """Testaa virheiden käsittelyä."""
 
