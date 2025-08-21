@@ -89,7 +89,7 @@ Testi test_keypair_return_format_mocked() varmistaa, että funktio palauttaa oik
 
 ## rsa_crypt
 
-Tämän tiedoston funktiot salaavat ja purkavat viestejä. Näitä testataan tiedostossa rsa_crypt_test.py. MessageCrypt-luokan toimintaa testataan salaamalla ja purkamalla ensin hyvin yksinkertainen viesti ns. roundtrip-menetelmällä. Seuraavaksi luokan toimintaa rajatapauksissa testataan antamalla funktioille liian suuria viestejä salattavaksi ja purettavaksi. Lopuksi luokan toimintaa testataan salaamalla ja purkamalla roundtrip-tyylillä monimiutkaisempi viesti, jossa on myös erikoismerkkejä.
+Tämän tiedoston funktiot salaavat ja purkavat viestejä. Näitä testataan tiedostossa rsa_crypt_test.py. MessageCrypt-luokan toimintaa testataan salaamalla ja purkamalla ensin hyvin yksinkertainen viesti ns. roundtrip-menetelmällä. Luokan toimintaa testataan myös virheellisellä viestillä, jotta ValueError nostetaan asiaankuuluvasti. Seuraavaksi luokan toimintaa rajatapauksissa testataan antamalla funktioille liian suuria viestejä salattavaksi ja purettavaksi. Lopuksi luokan toimintaa testataan salaamalla ja purkamalla roundtrip-tyylillä monimiutkaisempi viesti, jossa on myös erikoismerkkejä.
 
 ### Suorituskykytestit
 
@@ -109,13 +109,13 @@ Name                            Stmts   Miss Branch BrPart  Cover   Missing
 src/rsa_salaus/__init__.py          0      0      0      0   100%
 src/rsa_salaus/keygen.py           47      0     20      0   100%
 src/rsa_salaus/prime_utils.py      71      0     46      0   100%
-src/rsa_salaus/rsa_crypt.py        20      0      6      0   100%
+src/rsa_salaus/rsa_crypt.py        24      0      8      0   100%
 tests/__init__.py                   0      0      0      0   100%
 tests/keygen_test.py              107      0     10      0   100%
 tests/performance_test.py          58      0      2      0   100%
 tests/prime_utils_test.py         143      0     32      0   100%
-tests/rsa_crypt_test.py            34      0      0      0   100%
+tests/rsa_crypt_test.py            39      0      0      0   100%
 ---------------------------------------------------------------------------
-TOTAL                             480      0    116      0   100%
+TOTAL                             489      0    118      0   100%
 ```
 
